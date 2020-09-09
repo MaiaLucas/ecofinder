@@ -1,14 +1,14 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Menu from "./templates/Menu";
 import Header from "./templates/Header";
 import "./App.css";
 
 function App() {
   return (
-    <div className="container">
+    <Fragment>
       <Header />
       <Menu />
-    </div>
+    </Fragment>
   );
 }
 

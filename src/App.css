@@ -1,13 +1,26 @@
+:root {
+  --primary: #74c69d;
+  --secondary: #95d5b2;
+  --btn-primary: #40916c;
+  --btn-secondary: #40916c;
+  --btn-hover: #76bd8f;
+  --background: #f4fef6;
+  --black: #222222;
+  --white: #f9f9f9;
+  --shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
+}
+
 body {
-  background: #d8f3dc;
+  background: var(--background);
 }
 
 .Header {
-  background-color: #f9f9f9;
+  background-color: var(--white);
+  box-shadow: var(--shadow);
 }
 
 a {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .nav {
@@ -15,16 +28,63 @@ a {
 }
 
 .Login {
-  background: #40916c;
-  color: #f9f9f9;
+  background: var(--btn-primary);
+  color: var(--white);
   border-radius: 40%;
 }
 
 .Login:hover {
-  background: #74c69d;
+  background: var(--btn-hover);
   color: #f9f9f9;
 }
 
 .Logo {
   height: 1.5em;
+}
+
+.highlights-group {
+  background-color: var(--primary);
+  min-width: 300px;
+}
+
+.highlight {
+  max-width: 22.5rem;
+  box-shadow: var(--shadow);
+}
+
+.highlight > img {
+  height: 18rem;
+  box-shadow: var(--shadow);
+}
+
+.highlight > .card-body {
+  background-color: var(--white);
+  padding: 0px auto !important;
+  color: var(--black);
+}
+
+.highlight > .card-body > .headline {
+  font-size-adjust: 20px;
+  font-weight: 700;
+  margin: 0px;
+}
+
+.highlight > .card-body > .subheadline {
+  font-size: 15px;
+  color: #b8b8b8;
+  margin: 0px;
+}
+
+.info-img {
+  max-width: 8em;
+}
+
+.info-card {
+  color: var(--black);
+}
+
+.list-group-item:hover,
+.info-card:hover {
+  background-color: var(--secondary);
+  color: var(--white) !important;
 }
