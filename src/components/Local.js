@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import Card from "../templates/Card";
+import API from "../API";
 
 export default (props) => {
   const {
@@ -13,7 +14,7 @@ export default (props) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:4040/place/${params.id}/list`)
+    fetch(`${API()}/place/${params.id}/list`)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -26,6 +27,7 @@ export default (props) => {
         }
       );
   }, [params.id]);
+
   if (error) {
     return <div>Error: {error.message}</div>;
   } else if (!isLoaded) {
