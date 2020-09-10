@@ -14,7 +14,7 @@ export default (props) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    console.log(API());
+    // console.log(`${API()}/place/${params.id}/list`);
     fetch(`${API()}/place/${params.id}/list`)
       .then((res) => res.json())
       .then(
