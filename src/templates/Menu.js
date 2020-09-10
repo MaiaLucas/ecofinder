@@ -8,7 +8,6 @@ import Highlights from "./Highlights";
 import InformationCard from "./InformationCard";
 
 export default function Menu() {
-  console.log(process.env.DEV_URL);
   return (
     <div className="Menu">
       <div className="container">
@@ -27,20 +26,20 @@ export default function Menu() {
               img={onlineArticle}
               headline="Compras Online"
               subheadline="Aproveite para fazer aquelas Ecocomprinhas"
-              target={"store"}
+              target={"/place/3"}
             />
             <Highlights
               img={throwAway}
               headline="Ache Pontos de Coleta"
               subheadline="Encontre o posto de coleta perfeito para o seu lixo"
-              target={"garbage"}
+              target={"/place/1"}
             />
             <Highlights
               img={amongNature}
               headline="Encontre as Melhores Experiências"
               subheadline="Aproveite para dar aquela relaxada com as melhores 
               Ecoaventuras da sua região"
-              target={"experience"}
+              target={"/place/2"}
             />
           </div>
         </div>

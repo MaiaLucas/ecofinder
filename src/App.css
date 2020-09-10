@@ -52,7 +52,8 @@ a {
   box-shadow: var(--shadow);
 }
 
-.highlight > img {
+.highlight > img,
+.card-place-img {
   height: 18rem;
   box-shadow: var(--shadow);
 }
@@ -87,4 +88,13 @@ a {
 .info-card:hover {
   background-color: var(--secondary);
   color: var(--white) !important;
+}
+
+.local-card {
+  height: 20rem;
+  box-shadow: var(--shadow);
+}
+
+.local-dates {
+  font-size: 12px;
 }
