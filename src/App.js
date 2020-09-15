@@ -4,6 +4,7 @@ import Header from "./templates/Header";
 import Menu from "./templates/Menu";
 import Places from "./templates/Places";
 import Local from "./components/Local";
+import Login from "./components/Login";
 
 import "./App.css";
 
@@ -14,6 +15,7 @@ function App() {
       <Route path="/" exact component={Menu} />
       <Route path="/place" exact component={Places} />
       <Route path="/place/:id" component={Local} />
+      <Route path="/signin" component={Login} />
     </Router>
   );
 }

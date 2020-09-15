@@ -1,13 +1,17 @@
 :root {
   --primary: #74c69d;
   --secondary: #95d5b2;
-  --btn-primary: #40916c;
+  --btn-primary: #2D6A4F;
   --btn-secondary: #40916c;
   --btn-hover: #76bd8f;
   --background: #f4fef6;
   --black: #222222;
   --white: #f9f9f9;
   --shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
+}
+
+.container {
+  background: chocolate;
 }
 
 body {
@@ -52,11 +56,38 @@ a {
   box-shadow: var(--shadow);
 }
 
+.card-login {
+  width: 27.5rem;
+  box-shadow: var(--shadow);
+  margin-top: 100px;
+  padding: 24px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-login > img {
+  max-width: 8rem;
+}
+
+.btn-login {
+  background: var(--btn-primary);
+  border: none;
+  padding: 8px 0px;
+  color: var(--white);
+  border-radius: 4px;
+}
+
+.btn-login:hover {
+  background: var(--btn-hover);
+}
+
 .highlight > img,
 .card-place-img {
   height: 18rem;
   box-shadow: var(--shadow);
 }
+
 
 .highlight > .card-body {
   background-color: var(--white);

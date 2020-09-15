@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
-import Card from "../templates/Card";
-import API from "../API";
+  import React, { useState, useEffect } from "react";
+  import { Redirect } from "react-router-dom";
+  import Card from "../templates/Card";
+  import API from "../API";
 
 export default (props) => {
   const {
