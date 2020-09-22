@@ -5,7 +5,7 @@ import API from "../API";
 
 export default (props) => {
   const {
-    location: { headline, subheadline },
+    location: { headline, subheadline, pathname },
     match: { params },
   } = props;
 
@@ -14,8 +14,7 @@ export default (props) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    console.log(API());
-    fetch(`${API()}/place/${params.id}/list`)
+    fetch(API + pathname)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -27,7 +26,7 @@ export default (props) => {
           setError(error);
         }
       );
-  }, [params.id]);
+  }, [params.id, pathname]);
 
   if (error) {
     return <div>Error: {error.message}</div>;
