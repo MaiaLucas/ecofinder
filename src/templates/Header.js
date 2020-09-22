@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faHeart } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header() {
   return (
@@ -17,14 +17,32 @@ export default function Header() {
           </a>
         </li>
         <li className="nav-item">
-          <a
+          <div className="dropdown dropleft">
+            <button
+              className="btn btn-sm Login"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <FontAwesomeIcon icon={faUser} />
+              <FontAwesomeIcon icon={faHeart} />
+            </button>
+            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a className="dropdown-item" href="/login">
+                Login
+              </a>
+            </div>
+          </div>
+          {/* <a
             className="nav-link Login"
             href="/"
             tabIndex="-1"
             aria-disabled="true"
           >
             <FontAwesomeIcon icon={faUser} />
-          </a>
+          </a> */}
         </li>
       </ul>
     </div>
