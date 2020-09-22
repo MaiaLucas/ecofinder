@@ -2,7 +2,6 @@ import React from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import Header from "./templates/Header";
 import Menu from "./templates/Menu";
-import Places from "./templates/Places";
 import Local from "./components/Local";
 
 import "./App.css";
@@ -12,8 +11,11 @@ function App() {
     <Router>
       <Header />
       <Route path="/" exact component={Menu} />
-      <Route path="/place" exact component={Places} />
-      <Route path="/place/:id" component={Local} />
+      <Route
+        // path={encodeURIComponent("/place/:id?/:place?")}
+        path={"/place/:id?/:place?"}
+        component={Local}
+      />
     </Router>
   );
 }
