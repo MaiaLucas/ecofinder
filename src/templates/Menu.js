@@ -5,7 +5,7 @@ import throwAway from "../assets/img/throw_away.png";
 import onlineArticle from "../assets/img/online_article.png";
 import amongNature from "../assets/img/among_nature.png";
 import Highlights from "./Highlights";
-import InformationCard from "../components/InformationCard";
+import InformationCard from "./InformationCard";
 import Search from "../components/Search";
 
 export default function Menu() {
