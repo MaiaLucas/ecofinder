@@ -1,6 +1,4 @@
 import React from "react";
-import lotus from "../assets/img/lotus.png";
-import currentLocation from "../assets/img/current_location.png";
 import throwAway from "../assets/img/throw_away.png";
 import onlineArticle from "../assets/img/online_article.png";
 import amongNature from "../assets/img/among_nature.png";
@@ -11,13 +9,11 @@ import Search from "../components/Search";
 export default function Menu() {
   return (
     <div className="Menu">
-      <div className="container">
-        <div className="d-flex justify-content-center my-4">
-          <Search />
-        </div>
-        <div className="d-flex justify-content-center">
-          <img src={lotus} className="img-fluid col-sm-6" alt="" />
-          <img src={currentLocation} className="img-fluid col-sm-6" alt="" />
+      <div className="principal">
+        <div className="container">
+          <div className="d-flex justify-content-center my-4">
+            <Search />
+          </div>
         </div>
       </div>
 
@@ -50,7 +46,7 @@ export default function Menu() {
       </div>
 
       {/* Informativos */}
-      <div className="container mt-4">
+      <div className="container my-4">
         <div className="list-group">
           <h2 className="text-center">Informativos</h2>
           <div className="list-group-item">
