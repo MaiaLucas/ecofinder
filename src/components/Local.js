@@ -32,15 +32,17 @@ export default (props) => {
     return <div>Error: {error.message}</div>;
   } else if (!isLoaded) {
     return (
-      <div className="container d-flex justify-content-center p-4">
-        <div className="spinner-border text-success" role="status">
-          <span className="sr-only">Loading...</span>
+      <div className="main-view">
+        <div className="container d-flex justify-content-center p-4">
+          <div className="spinner-border text-success" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
         </div>
       </div>
     );
   } else if (headline !== undefined) {
     return (
-      <div>
+      <div className="main-view">
         <div className="container mb-4">
           <h1>{headline}</h1>
           <h6>{subheadline}</h6>
