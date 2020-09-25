@@ -1,19 +1,20 @@
 import React from "react";
+import logo from "../assets/img/ecofinder_logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faHeart } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header() {
   return (
-    <div className="Header">
-      <ul className="nav align-items-center justify-content-between px-3">
+    <div className="Header align-items-center justify-content-between">
+      <ul className="nav d-flex align-items-center justify-content-between px-3">
         <li className="nav-item">
           <a className="nav-link active" href="/">
             <img
-              src="https://fontmeme.com/permalink/200908/01db273d3f8c7a46dde984efc4512485.png"
+              src={logo}
               alt="grundschrift-font"
               border="0"
               className="Logo"
-            ></img>
+            />
           </a>
         </li>
         <li className="nav-item">
