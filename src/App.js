@@ -5,6 +5,7 @@ import Menu from "./templates/Menu";
 import Local from "./components/Local";
 
 import "./App.css";
+import Footer from "./templates/Footer";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         path={"/place/:id?/:place?"}
         component={Local}
       />
+      <Footer />
     </Router>
   );
 }
