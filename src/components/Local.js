@@ -29,10 +29,10 @@ export default (props) => {
   }, [params.id, pathname]);
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div className="Menu">Error: {error.message}</div>;
   } else if (!isLoaded) {
     return (
-      <div className="main-view">
+      <div className="Menu">
         <div className="container d-flex justify-content-center p-4">
           <div className="spinner-border text-success" role="status">
             <span className="sr-only">Loading...</span>
@@ -42,7 +42,7 @@ export default (props) => {
     );
   } else if (headline !== undefined) {
     return (
-      <div className="main-view">
+      <div className="Menu">
         <div className="container mb-4">
           <h1>{headline}</h1>
           <h6>{subheadline}</h6>

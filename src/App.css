@@ -12,12 +12,22 @@
 
 body {
   background: var(--background);
+  display: grid;
+  grid-template-rows: 200px 1fr 60px;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "cabecalho"
+    "principal"
+    "rodape";
 }
 
 .Header {
   background-color: var(--white);
   box-shadow: var(--shadow);
   height: 70px;
+  grid-area: cabecalho;
+  z-index: 1;
+  box-shadow: 0px 1px 9px -2px rgba(0, 0, 0, 0.75);
 }
 
 .nav {
@@ -51,17 +61,20 @@ a {
 }
 
 .Menu {
-  margin-top: -1.4rem;
+  /* margin-top: -1.4rem; */
+  grid-area: principal;
+  min-height: calc(100vh - 7.85rem);
 }
 
 .main-view {
+  grid-area: principal;
   min-height: calc(100vh - 6.1rem);
 }
 
 .principal {
   background-image: url("./assets/img/sustentability-bg.jpg");
   min-height: 90vh;
-  margin: 0px !important;
+  margin-top: -1.4rem !important;
   padding: 0px !important;
   background-repeat: no-repeat;
   background-size: 100vw 90vh;
@@ -203,12 +216,27 @@ input[type="search"]:focus,
   box-shadow: var(--shadow);
 }
 
+.url-group {
+  max-height: 190px;
+  overflow-y: scroll;
+  padding: 8px;
+  border: 1px solid #22222227;
+  /* background-color: #222222; */
+}
+
 .local-dates {
   font-size: 12px;
 }
 
 .Footer {
   background-color: var(--primary);
+  grid-area: rodape;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 1.2rem;
+  padding-right: 20px;
+  color: #444;
 }
 
 .footer-icons {
