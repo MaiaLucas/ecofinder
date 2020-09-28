@@ -12,9 +12,8 @@ export default (props) => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-
   useEffect(() => {
-    fetch(API + pathname)
+    fetch(`${API}${pathname}`)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -43,7 +42,7 @@ export default (props) => {
   } else if (headline !== undefined) {
     return (
       <div className="Menu">
-        <div className="container mb-4">
+        <div className="m-4">
           <h1>{headline}</h1>
           <h6>{subheadline}</h6>
         </div>

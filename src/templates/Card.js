@@ -4,7 +4,7 @@ import amongNature from "../assets/img/among_nature.png";
 export default (props) => {
   const info = props.config;
 
-  const images = info.images_url.split(";");
+  const images = info.images_url ? info.images_url.split(";") : "";
   return (
     <div className="card col-sm-12 m-2 local-card" id={info.id}>
       <div className="row d-flex align-items-center">
