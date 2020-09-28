@@ -9,13 +9,13 @@ export default (props) => {
   //   match: { params },
   // } = props;
   const funcionamento = [
-    { id: 1, dia: "seg", check: false },
-    { id: 2, dia: "ter", check: false },
-    { id: 3, dia: "qua", check: false },
-    { id: 4, dia: "qui", check: false },
-    { id: 5, dia: "sex", check: false },
-    { id: 6, dia: "sab", check: false },
-    { id: 7, dia: "sdom", check: false },
+    { id: 1, dia: "seg", check: true },
+    { id: 2, dia: "ter", check: true },
+    { id: 3, dia: "qua", check: true },
+    { id: 4, dia: "qui", check: true },
+    { id: 5, dia: "sex", check: true },
+    { id: 6, dia: "sab", check: true },
+    { id: 7, dia: "dom", check: true },
   ];
 
   const [listTypes, setListTypes] = useState([]);
@@ -24,9 +24,9 @@ export default (props) => {
   const [error, setError] = useState(null);
   const [objCadastro, setObjCadastro] = useState({});
 
-  // useEffect(() => {
-  //   return () => {};
-  // }, []);
+  useEffect(() => {
+    return () => {};
+  }, []);
 
   useEffect(() => {
     fetch(`${API}/type`)
@@ -46,34 +46,60 @@ export default (props) => {
   const handleChange = (e, index) => {
     const days = [...daysOpening];
     days[index]["check"] = days[index]["check"] ? false : true;
+
     setDaysOpening(days);
   };
 
-  const onSubmit = (e) => {
-    const arrOpen = daysOpening.filter((day) => !day.check);
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log(daysOpening);
+    const arrOpen = daysOpening.filter((day) => day.check);
     let workingDays = "";
-    if (arrOpen.length) {
-      workingDays = arrOpen.join(",");
+    console.log(arrOpen);
+    if (arrOpen.length < 7) {
+      workingDays = arrOpen.map((dia) => dia.dia).join(",");
     } else {
       workingDays = "todos os dias";
     }
 
     const form = { ...objCadastro };
+    form["author"] = "d7926dc0-ed58-41a9-9279-cf921bd9e5ab";
     form["opening_days"] = workingDays;
 
     setObjCadastro(form);
 
-    console.log(objCadastro);
+    console.log(JSON.stringify(form));
+
+    fetch(`${API}/place`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json;charset=UTF-8",
+        authorization: `bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ImQ3OTI2ZGMwLWVkNTgtNDFhOS05Mjc5LWNmOTIxYmQ5ZTVhYiIsInVzZXJuYW1lIjoiUnViZW5zIiwiZW1haWwiOiJydWJlbnNAZW1haWwuY29tIiwiaWF0IjoxNjAxMjE5ODkyLCJleHAiOjE2MDEzMDYyOTJ9.gnUO8ALxoaZFmxPcckHdAcjNkloLkRrRLpzSn1NxVNM`,
+        mode: "cors",
+        cache: "default",
+      },
+      body: JSON.stringify(form),
+    })
+      .then((res) => res)
+      .then(
+        (result) => {
+          console.log(result);
+          return false;
+        },
+        (error) => {
+          console.log(JSON.parse(error));
+        }
+      );
+
+    return false;
   };
 
   const handelInputChange = (e) => {
     const { name, value } = e.target;
     const form = { ...objCadastro };
     form[name] = value;
-
     setObjCadastro(form);
-
-    console.log(objCadastro);
   };
 
   if (error) {
@@ -90,11 +116,11 @@ export default (props) => {
     );
   } else if (isLoaded) {
     return (
-      <div className="Menu">
-        <div className="container">
+      <div className="Menu d-flex flex-column justify-content-start align-items-center">
+        <h1 className="col-12 title">Cadastro</h1>
+        <form onSubmit={(e) => onSubmit(e)}>
           <div className="card">
             <div className="card-body">
-              <h3 className="card-title">Cadastro</h3>
               <div className="form-group d-flex">
                 <div className="col-4">
                   <label htmlFor="categorias">Categorias *</label>
@@ -102,8 +128,8 @@ export default (props) => {
                     className="form-control"
                     id="categorias"
                     name="type"
-                    required
-                    onKeyUp={(e) => handelInputChange(e)}
+                    // required
+                    onChange={(e) => handelInputChange(e)}
                   >
                     <option value="-1">Categorias </option>
                     {listTypes.map((cat) => (
@@ -120,49 +146,12 @@ export default (props) => {
                     className="form-control"
                     id="title"
                     name="title"
-                    required
+                    // required
                     onKeyUp={(e) => handelInputChange(e)}
                     placeholder="Estação de Coleta ..."
                   />
                 </div>
               </div>
-
-              {/* <p className="col-12">URL da Imagem</p>
-              <div className="form-group url-group">
-                {images.map((url, i) => {
-                  return (
-                    <div
-                      className="d-flex justify-content-start align-items-start mt-2"
-                      key={url.id}
-                    >
-                      <p>{url.id}# </p>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id={`urlImage-${url.id}`}
-                        onKeyUp={(e) => handleChange(e, i)}
-                        placeholder="Insira aqui a url da imagem"
-                        value={url.value}
-                      />
-                      {images.length !== 1 && (
-                        <button
-                          className="mx-1 btn btn-danger"
-                          onClick={() => handleRemoveClick(i)}
-                        >
-                          <FontAwesomeIcon icon={faTrash} />
-                        </button>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="col-1 my-1">
-                <input
-                  onClick={handleCLick}
-                  className="btn btn-success"
-                  value="+"
-                />
-              </div> */}
 
               <div className="form-group d-flex">
                 <div className="col-2">
@@ -172,7 +161,7 @@ export default (props) => {
                     className="form-control"
                     id="state"
                     name="state"
-                    required
+                    // required
                     onKeyUp={(e) => handelInputChange(e)}
                     placeholder="CE"
                   />
@@ -184,6 +173,7 @@ export default (props) => {
                     className="form-control"
                     id="cidade"
                     name="city"
+                    // required
                     onKeyUp={(e) => handelInputChange(e)}
                     placeholder="Fortaleza"
                   />
@@ -195,6 +185,7 @@ export default (props) => {
                     className="form-control"
                     id="endereco"
                     name="address"
+                    // required
                     onKeyUp={(e) => handelInputChange(e)}
                     placeholder="Rua dos Bobos, 0, Bairro"
                   />
@@ -220,6 +211,7 @@ export default (props) => {
                     className="form-control"
                     id="phone"
                     name="phone"
+                    // required
                     onKeyUp={(e) => handelInputChange(e)}
                     placeholder="(99) 99999-9999"
                   />
@@ -253,13 +245,14 @@ export default (props) => {
                   <label htmlFor="funcionamento">Dias de Funcionamento</label>
                   <br />
                   <div className="form-check form-check-inline">
-                    {funcionamento.map((dia, i) => (
+                    {daysOpening.map((dia, i) => (
                       <div className="mx-1" key={i}>
                         <input
                           className="form-check-input"
                           type="checkbox"
                           id={dia.dia}
                           value="dia"
+                          checked={dia.check}
                           onChange={(e) => handleChange(e, i)}
                         />
                         <label className="form-check-label" htmlFor={dia.dia}>
@@ -271,16 +264,12 @@ export default (props) => {
                 </div>
               </div>
 
-              <button
-                type="submit"
-                className="btn btn-primary"
-                onClick={(e) => onSubmit(e)}
-              >
-                Submit
+              <button type="submit" className="btn-save w-25 mt-4">
+                Salvar
               </button>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     );
   } else {
