@@ -264,3 +264,27 @@ input[type="search"]:focus,
 .footer-message {
   color: var(--white);
 }
+
+.alert-save {
+  border: none;
+  padding: 8px 40px;
+  border-radius: 4px;
+}
+
+.alert-save.show {
+  transition: opacity 0.5s;
+  opacity: 1;
+}
+
+.alert-save.hide {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.alert-save.success {
+  box-shadow: 2px 2px 2px 0px var(--btn-hover);
+}
+
+.alert-save.error {
+  box-shadow: 2px 2px 2px 0px #f87979;
+}

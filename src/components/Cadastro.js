@@ -1,13 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Redirect } from "react-router-dom";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import API from "../API";
+import Input from "../templates/Input";
+
+const Option = (props) => {
+  props.listTypes.map((cat, i) => (
+    // <Option
+    //   value={cat.id}
+    //   key={i}
+    //   select={objCadastro.type === cat.id ? "selected" : ""}
+    //   name={cat.name}
+    // />
+    <option
+      value={cat.id}
+      key={i}
+      selected={props.type === cat.id ? "selected" : ""}
+    >
+      {cat.name}
+    </option>
+  ));
+  // return (
+  //   <option value={props.value} id={props.value} selected={props.select}>
+  //     {props.name}
+  //   </option>
+  // );
+};
 
 export default (props) => {
-  // const {
-  //   match: { params },
-  // } = props;
+  const {
+    match: { params },
+  } = props;
+
   const funcionamento = [
     { id: 1, dia: "seg", check: true },
     { id: 2, dia: "ter", check: true },
@@ -17,88 +42,130 @@ export default (props) => {
     { id: 6, dia: "sab", check: true },
     { id: 7, dia: "dom", check: true },
   ];
+  const listTypes = [
+    { id: 1, name: "Postos de Coleta" },
+    { id: 2, name: "Experiências" },
+    { id: 3, name: "Lojas" },
+  ];
 
-  const [listTypes, setListTypes] = useState([]);
   const [daysOpening, setDaysOpening] = useState(funcionamento);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState({
+    class: "alert-danger error hide",
+    msg: "Não foi possível salvar o local",
+  });
   const [objCadastro, setObjCadastro] = useState({});
 
-  useEffect(() => {
-    return () => {};
-  }, []);
-
-  useEffect(() => {
-    fetch(`${API}/type`)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setIsLoaded(true);
-          setListTypes(result);
+  if (params.id) {
+    useEffect(() => {
+      fetch(`${API}/place/${params.id}`, {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json;charset=UTF-8",
+          authorization: `bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ImNiNmY5ODYyLWM3MWMtNGFkZi1iMTkwLWRmYWQ2ZjE3ZGZmNSIsInVzZXJuYW1lIjoiUnViZW5zIiwiZW1haWwiOiJydWJlbnNAZW1haWwuY29tIiwiaWF0IjoxNjAxMzEwMDEwLCJleHAiOjE2MDEzOTY0MTB9.5uH86r5t6leD7hQ_RP7fvHzsK0jqioicS7lkTTK_lg4`,
+          // mode: "cors",
         },
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-        }
-      );
-  }, []);
+      })
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            setObjCadastro({
+              title: result.title,
+              description: result.description,
+              type: result.type,
+              state: result.state,
+              city: result.city,
+              address: result.address,
+              phone: result.phone,
+              hr_init: result.hr_init,
+              hr_final: result.hr_final,
+              author: result.author,
+              opening_days: result.opening_days,
+            });
 
-  const handleChange = (e, index) => {
-    const days = [...daysOpening];
-    days[index]["check"] = days[index]["check"] ? false : true;
+            setIsLoaded(true);
+          },
+          (error) => {
+            setIsLoaded(true);
+            setError(error);
+          }
+        );
 
-    setDaysOpening(days);
-  };
+      return () => {};
+    }, [daysOpening, objCadastro.opening_days, params.id]);
+  }
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log(daysOpening);
-    const arrOpen = daysOpening.filter((day) => day.check);
-    let workingDays = "";
-    console.log(arrOpen);
-    if (arrOpen.length < 7) {
-      workingDays = arrOpen.map((dia) => dia.dia).join(",");
-    } else {
-      workingDays = "todos os dias";
-    }
+  const handleChange = useCallback(
+    (e, index) => {
+      const days = [...daysOpening];
+      days[index]["check"] = days[index]["check"] ? false : true;
 
-    const form = { ...objCadastro };
-    form["author"] = "d7926dc0-ed58-41a9-9279-cf921bd9e5ab";
-    form["opening_days"] = workingDays;
+      setDaysOpening(days);
+    },
+    [daysOpening]
+  );
 
-    setObjCadastro(form);
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const arrOpen = daysOpening.filter((day) => day.check);
+      let workingDays = "";
+      if (arrOpen.length < 7) {
+        workingDays = arrOpen.map((dia) => dia.dia).join(",");
+      } else {
+        workingDays = "todos os dias";
+      }
 
-    console.log(JSON.stringify(form));
+      const form = { ...objCadastro };
+      form["author"] = "cb6f9862-c71c-4adf-b190-dfad6f17dff5";
+      form["opening_days"] = workingDays;
 
-    fetch(`${API}/place`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json;charset=UTF-8",
-        authorization: `bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ImQ3OTI2ZGMwLWVkNTgtNDFhOS05Mjc5LWNmOTIxYmQ5ZTVhYiIsInVzZXJuYW1lIjoiUnViZW5zIiwiZW1haWwiOiJydWJlbnNAZW1haWwuY29tIiwiaWF0IjoxNjAxMjE5ODkyLCJleHAiOjE2MDEzMDYyOTJ9.gnUO8ALxoaZFmxPcckHdAcjNkloLkRrRLpzSn1NxVNM`,
-        mode: "cors",
-        cache: "default",
-      },
-      body: JSON.stringify(form),
-    })
-      .then((res) => res)
-      .then(
-        (result) => {
-          console.log(result);
-          return false;
+      setObjCadastro(form);
+
+      fetch(`${API}/place${params.id ? "/" + params.id : ""}`, {
+        method: params.id ? "PUT" : "POST",
+        headers: {
+          "Content-type": "application/json;charset=UTF-8",
+          authorization: `bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ImNiNmY5ODYyLWM3MWMtNGFkZi1iMTkwLWRmYWQ2ZjE3ZGZmNSIsInVzZXJuYW1lIjoiUnViZW5zIiwiZW1haWwiOiJydWJlbnNAZW1haWwuY29tIiwiaWF0IjoxNjAxMzEwMDEwLCJleHAiOjE2MDEzOTY0MTB9.5uH86r5t6leD7hQ_RP7fvHzsK0jqioicS7lkTTK_lg4`,
+          // mode: "cors",
         },
-        (error) => {
-          console.log(JSON.parse(error));
+        body: JSON.stringify(form),
+      }).then((res) => {
+        let message = {
+          class: "alert-danger error show",
+          msg: "Não foi possível salvar o local",
+        };
+
+        if (res.status === 200) {
+          message = {
+            class: "alert-success success show",
+            msg: "Local salvo com sucesso!",
+          };
         }
-      );
 
-    return false;
-  };
+        setMessage(message);
 
-  const handelInputChange = (e) => {
+        setTimeout(() => {
+          setMessage({
+            class: "hide",
+            msg: "",
+          });
+        }, 2000);
+      });
+
+      return false;
+    },
+    [daysOpening, objCadastro, params.id]
+  );
+
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
+
     const form = { ...objCadastro };
     form[name] = value;
+
     setObjCadastro(form);
   };
 
@@ -117,7 +184,7 @@ export default (props) => {
   } else if (isLoaded) {
     return (
       <div className="Menu d-flex flex-column justify-content-start align-items-center">
-        <h1 className="col-12 title">Cadastro</h1>
+        <h1 className="col-12 title">{params.id ? "Edição" : "Cadastro"}</h1>
         <form onSubmit={(e) => onSubmit(e)}>
           <div className="card">
             <div className="card-body">
@@ -128,68 +195,64 @@ export default (props) => {
                     className="form-control"
                     id="categorias"
                     name="type"
-                    // required
-                    onChange={(e) => handelInputChange(e)}
+                    required
+                    onChange={(e) => handleInputChange(e)}
                   >
-                    <option value="-1">Categorias </option>
-                    {listTypes.map((cat) => (
-                      <option value={cat.id} key={cat.id}>
-                        {cat.name}
-                      </option>
-                    ))}
+                    <option value="">Categorias </option>
+                    {/* <Option listTypes={listTypes} type={objCadastro.type} /> */}
                   </select>
                 </div>
-                <div className="col-8">
-                  <label htmlFor="title">Título *</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="title"
-                    name="title"
-                    // required
-                    onKeyUp={(e) => handelInputChange(e)}
-                    placeholder="Estação de Coleta ..."
-                  />
-                </div>
+                <Input
+                  type="text"
+                  classGroup="col-8"
+                  title="Titulo *"
+                  classInput="form-control"
+                  id="title"
+                  name="title"
+                  required={true}
+                  placeholder="Digite aqui o título que deseja"
+                  value={objCadastro.title}
+                  func={handleInputChange}
+                />
               </div>
 
               <div className="form-group d-flex">
-                <div className="col-2">
-                  <label htmlFor="state">Estado *</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="state"
-                    name="state"
-                    // required
-                    onKeyUp={(e) => handelInputChange(e)}
-                    placeholder="CE"
-                  />
-                </div>
-                <div className="col-2">
-                  <label htmlFor="cidade">Cidade *</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="cidade"
-                    name="city"
-                    // required
-                    onKeyUp={(e) => handelInputChange(e)}
-                    placeholder="Fortaleza"
-                  />
-                </div>
-                <div className="col-8">
-                  <label htmlFor="endereco">Endereço *</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="endereco"
-                    name="address"
-                    // required
-                    onKeyUp={(e) => handelInputChange(e)}
-                    placeholder="Rua dos Bobos, 0, Bairro"
-                  />
-                </div>
+                <Input
+                  type="text"
+                  classGroup="col-2"
+                  title="Estado *"
+                  classInput="form-control"
+                  id="state"
+                  name="state"
+                  required={true}
+                  placeholder="CE"
+                  value={objCadastro.state}
+                  func={handleInputChange}
+                />
+                <Input
+                  type="text"
+                  classGroup="col-2"
+                  title="Cidade *"
+                  classInput="form-control"
+                  id="city"
+                  name="city"
+                  required={true}
+                  placeholder="Fortaleza"
+                  value={objCadastro.city}
+                  func={handleInputChange}
+                />
+                <Input
+                  type="text"
+                  classGroup="col-8"
+                  title="Endereço *"
+                  classInput="form-control"
+                  id="address"
+                  name="address"
+                  required={true}
+                  placeholder="Rua dos Bobos, 0 - Castelão"
+                  value={objCadastro.address}
+                  func={handleInputChange}
+                />
               </div>
 
               <div className="form-group col-12">
@@ -198,75 +261,92 @@ export default (props) => {
                   className="form-control"
                   id="descricao"
                   name="description"
-                  onKeyUp={(e) => handelInputChange(e)}
+                  defaultValue={objCadastro.description}
+                  onKeyUp={(e) => handleInputChange(e)}
+                  placeholder="Conte-nos um pouco mais sobre o que está cadastrando"
                   rows="3"
                 ></textarea>
               </div>
 
               <div className="form-group d-flex">
-                <div className="col-3">
-                  <label htmlFor="phone">Telefone *</label>
-                  <input
-                    type="tel"
-                    className="form-control"
-                    id="phone"
-                    name="phone"
-                    // required
-                    onKeyUp={(e) => handelInputChange(e)}
-                    placeholder="(99) 99999-9999"
-                  />
-                </div>
+                <Input
+                  type="time"
+                  classGroup="col-3"
+                  title="Abre às *"
+                  classInput="form-control"
+                  id="hr_init"
+                  name="hr_init"
+                  required={true}
+                  placeholder=""
+                  value={objCadastro.hr_init}
+                  func={handleInputChange}
+                />
+                <Input
+                  type="time"
+                  classGroup="col-3"
+                  title="Fecha às *"
+                  classInput="form-control"
+                  id="hr_final"
+                  name="hr_final"
+                  required={true}
+                  placeholder=""
+                  value={objCadastro.hr_final}
+                  func={handleInputChange}
+                />
+                <Input
+                  type="phone"
+                  classGroup="col-6"
+                  title="Telefone para contato *"
+                  classInput="form-control"
+                  id="phone"
+                  name="phone"
+                  required={true}
+                  placeholder="+55 (99) 99999-9999"
+                  value={objCadastro.phone}
+                  func={handleInputChange}
+                />
+              </div>
 
-                <div className="col-2">
-                  <label htmlFor="hrIni">Horario inicial *</label>
-                  <input
-                    type="time"
-                    className="form-control"
-                    id="hrIni"
-                    name="hr_init"
-                    onChange={(e) => handelInputChange(e)}
-                    placeholder="Fortaleza"
-                  />
-                </div>
+              <div className="form-group">
+                <label htmlFor="funcionamento">Dias de Funcionamento</label>
+                <div className="ml-4 form-check form-check-inline">
+                  {daysOpening.map((dia, i) => {
+                    let check = dia.check;
 
-                <div className="col-2">
-                  <label htmlFor="hrFin">Horario final *</label>
-                  <input
-                    type="time"
-                    className="form-control"
-                    id="hrFin"
-                    name="hr_final"
-                    onChange={(e) => handelInputChange(e)}
-                    placeholder="Fortaleza"
-                  />
-                </div>
-
-                <div className="col-7">
-                  <label htmlFor="funcionamento">Dias de Funcionamento</label>
-                  <br />
-                  <div className="form-check form-check-inline">
-                    {daysOpening.map((dia, i) => (
+                    if (objCadastro.opening_days)
+                      check =
+                        objCadastro.opening_days.indexOf(dia.dia) !== -1
+                          ? dia.check
+                          : false;
+                    return (
                       <div className="mx-1" key={i}>
                         <input
                           className="form-check-input"
                           type="checkbox"
                           id={dia.dia}
                           value="dia"
-                          checked={dia.check}
+                          // checked={dia.check}
+                          checked={check}
                           onChange={(e) => handleChange(e, i)}
                         />
                         <label className="form-check-label" htmlFor={dia.dia}>
                           {dia.dia}
                         </label>
                       </div>
-                    ))}
-                  </div>
+                    );
+                  })}
                 </div>
               </div>
 
-              <button type="submit" className="btn-save w-25 mt-4">
-                Salvar
-              </button>
+              <div className="d-flex justify-content-between align-items-end">
+                <button type="submit" className="btn-save w-25">
+                  Salvar
+                </button>
+
+                <div className={`alert alert-save ${message.class} m-0`}>
+                  {message.msg}
+                </div>
+              </div>
             </div>
           </div>
         </form>

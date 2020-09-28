@@ -14,6 +14,7 @@ function App() {
       <Header />
       <Route path="/" exact component={Menu} />
       <Route path="/cadastro" exact component={Cadastro} />
+      <Route path="/editar/:id" exact component={Cadastro} />
       <Route
         // path={encodeURIComponent("/place/:id?/:place?")}
         path={"/place/:id?/:place?"}
