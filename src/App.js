@@ -7,6 +7,7 @@ import Local from "./components/Local";
 import "./App.css";
 import Footer from "./templates/Footer";
 import RegisterPlace from "./components/RegisterPlace";
+import PlaceDetail from "./templates/PlaceDetail";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/register" exact component={RegisterPlace} />
       <Route path="/edit/:id" exact component={RegisterPlace} />
       <Route path={"/place/:id?/:place?"} component={Local} />
+      <Route path={"/detail/:id"} component={PlaceDetail} />
       <Footer />
     </Router>
   );
