@@ -22,25 +22,9 @@ export default function Menu() {
         <h2 className="text-center text-white">Destaques</h2>
         <div className="container">
           <div className="row justify-content-around py-3">
-            <Highlights
-              img={onlineArticle}
-              headline="Compras Online"
-              subheadline="Aproveite para fazer aquelas Ecocomprinhas"
-              target={"/place/3/list"}
-            />
-            <Highlights
-              img={throwAway}
-              headline="Ache Pontos de Coleta"
-              subheadline="Encontre o posto de coleta perfeito para o seu lixo"
-              target={"/place/1/list"}
-            />
-            <Highlights
-              img={amongNature}
-              headline="Encontre as Melhores Experiências"
-              subheadline="Aproveite para dar aquela relaxada com as melhores 
-              Ecoaventuras da sua região"
-              target={"/place/2/list"}
-            />
+            <Highlights img={onlineArticle} id={3} target={"/place/3/list"} />
+            <Highlights img={throwAway} id={1} target={"/place/1/list"} />
+            <Highlights img={amongNature} id={2} target={"/place/2/list"} />
           </div>
         </div>
       </div>
