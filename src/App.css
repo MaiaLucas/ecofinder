@@ -26,8 +26,12 @@ body {
   box-shadow: var(--shadow);
   height: 70px;
   grid-area: cabecalho;
-  z-index: 1;
+  z-index: 2;
   box-shadow: 0px 1px 9px -2px rgba(0, 0, 0, 0.75);
+}
+
+.username {
+  color: var(--primary);
 }
 
 .title {
@@ -81,6 +85,7 @@ a {
   /* margin-top: -1.4rem; */
   grid-area: principal;
   min-height: calc(100vh - 7.85rem);
+  z-index: 1;
 }
 
 .main-view {
@@ -88,7 +93,8 @@ a {
   min-height: calc(100vh - 6.1rem);
 }
 
-.principal {
+.principal,
+.local-highlights {
   background-image: url("./assets/img/sustentability-bg.jpg");
   min-height: 90vh;
   margin-top: -1.4rem !important;
@@ -96,6 +102,24 @@ a {
   background-repeat: no-repeat;
   background-size: 100vw 90vh;
   background-position: 98% center;
+}
+
+.local-highlights {
+  background-image: url("./assets/img/places_highlights.jpg");
+  color: var(--white);
+  text-shadow: 2px 2px var(--secondary);
+  margin-top: 0px !important;
+  z-index: 99999999 !important;
+}
+.local-highlights h1 {
+  font-size: 100px;
+}
+.local-highlights h6 {
+  font-size: 30px;
+}
+
+.view-cards {
+  margin: 80px 300px !important;
 }
 
 .disabled-link {
@@ -187,10 +211,37 @@ input[type="search"]:focus,
 }
 
 .highlight > img,
-.card-place-img {
+.card-place-img,
+.card-place img {
   height: 18rem;
   box-shadow: var(--shadow);
+  border-radius: 20px;
 }
+
+.card-place {
+  height: 18rem;
+  width: 18rem;
+  margin: 8px;
+  overflow-x: hidden;
+  transition: width 0.5s, height 0.5s, font-size 0.5s;
+}
+
+.card-place:hover {
+  height: 20rem;
+  width: 20rem;
+  color: #222222;
+  font-size: 25px;
+}
+
+.link-place-detail {
+  text-decoration: none;
+  color: var(--black);
+}
+
+/* .place-edit {
+  position: absolute;
+  color: var(--primary);
+} */
 
 .highlight > .card-body {
   background-color: var(--white);
