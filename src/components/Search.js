@@ -7,7 +7,6 @@ export default (props) => {
   const [type, setType] = useState("");
   const [place, setPlace] = useState("");
   const [title, setTitle] = useState("Categorias");
-  const [subheadline, setSubheadline] = useState("");
   const [disabledLink, setDisabledLink] = useState("disabled-link");
   const [target, setTarget] = useState("/place");
 
@@ -15,10 +14,9 @@ export default (props) => {
     return () => {};
   }, []);
 
-  const changePlace = (title, id, subheadline) => {
+  const changePlace = (title, id) => {
     setType(id);
     setTitle(title);
-    setSubheadline(subheadline);
     setTarget(`/place/${id}/list/${place}`);
   };
 
@@ -47,39 +45,21 @@ export default (props) => {
         <div className="dropdown-menu">
           <div
             className="dropdown-item"
-            onClick={() =>
-              changePlace(
-                "Postos de Coleta",
-                1,
-                "Encontre o posto de coleta perfeito para o seu lixo"
-              )
-            }
+            onClick={() => changePlace("Postos de Coleta", 1)}
           >
             Postos de Coleta
           </div>
           <div role="separator" className="dropdown-divider"></div>
           <div
             className="dropdown-item"
-            onClick={() =>
-              changePlace(
-                "Experiências",
-                2,
-                "Aproveite para dar aquela relaxada com as melhores Ecoaventuras da sua região"
-              )
-            }
+            onClick={() => changePlace("Experiências", 2)}
           >
             Experiências
           </div>
           <div role="separator" className="dropdown-divider"></div>
           <div
             className="dropdown-item"
-            onClick={() =>
-              changePlace(
-                "Lojas",
-                3,
-                "Aproveite para fazer aquelas Ecocomprinhas"
-              )
-            }
+            onClick={() => changePlace("Lojas", 3)}
           >
             Lojas
           </div>
@@ -94,12 +74,9 @@ export default (props) => {
       <Link
         className={`btn-search d-flex align-items-center justify-content-center ${disabledLink} mx-4`}
         to={{
-          // pathname: `/place${type !== "" ? `/${type}/list` : ""}${
-          //   place !== "" ? "/" + place : ""
-          // }`,
           pathname: target,
-          headline: title === "Categorias" ? "Pesquisa" : title,
-          subheadline: subheadline,
+          id: type ? type : 0,
+          place: place,
         }}
       >
         <FontAwesomeIcon icon={faSearch} />
