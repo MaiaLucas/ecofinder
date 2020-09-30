@@ -2,13 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function Highlights(props) {
+  console.log(props.id);
   return (
     <Link
       className="card highlight"
       to={{
         pathname: props.target,
-        headline: props.headline,
-        subheadline: props.subheadline,
+        id: props.id,
       }}
     >
       <img src={props.img} className="card-img-top" alt="" />
