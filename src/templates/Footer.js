@@ -7,7 +7,7 @@ export default () => {
   return (
     <div className="Footer d-flex justify-content-between p-2">
       <div className="footer-message ml-4">
-        Por amor ao nosso planeta{" "}
+        Por amor ao nosso planeta
         <FontAwesomeIcon icon={faHeart} className="footer-icons fa-lg" />
       </div>
       <div className="external mr-4">
