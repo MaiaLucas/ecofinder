@@ -6,20 +6,16 @@ import Local from "./components/Local";
 
 import "./App.css";
 import Footer from "./templates/Footer";
-import Cadastro from "./components/Cadastro";
+import RegisterPlace from "./components/RegisterPlace";
 
 function App() {
   return (
     <Router>
       <Header />
       <Route path="/" exact component={Menu} />
-      <Route path="/cadastro" exact component={Cadastro} />
-      <Route path="/editar/:id" exact component={Cadastro} />
-      <Route
-        // path={encodeURIComponent("/place/:id?/:place?")}
-        path={"/place/:id?/:place?"}
-        component={Local}
-      />
+      <Route path="/register" exact component={RegisterPlace} />
+      <Route path="/edit/:id" exact component={RegisterPlace} />
+      <Route path={"/place/:id?/:place?"} component={Local} />
       <Footer />
     </Router>
   );
