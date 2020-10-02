@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import Card from "../templates/Card";
 import API from "../API";
+import Loading from "../templates/Loading";
 
 export default (props) => {
   const {
@@ -58,15 +59,7 @@ export default (props) => {
   if (error) {
     return <div className="Menu">Error: {error.message}</div>;
   } else if (!isLoaded && !redirect) {
-    return (
-      <div className="Menu">
-        <div className="container d-flex justify-content-center p-4">
-          <div className="spinner-border text-success" role="status">
-            <span className="sr-only">Loading...</span>
-          </div>
-        </div>
-      </div>
-    );
+    return <Loading />;
   } else if (isLoaded) {
     return (
       <div className="Menu">

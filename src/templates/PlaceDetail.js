@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import API from "../API";
-import { userInfo } from "../auth/Validations";
+// import { userInfo } from "../auth/Validations";
 import Loading from "./Loading";
 
 export default (props) => {
@@ -11,11 +11,11 @@ export default (props) => {
   } = props;
 
   const [place, setPlace] = useState();
-  const [user, setUser] = useState(userInfo());
+  const [user, setUser] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setUser(userInfo());
+    // setUser(userInfo());
     setPlace();
     return () => {};
   }, [objPlace]);

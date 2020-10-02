@@ -24,8 +24,8 @@ body {
 .Header {
   background-color: var(--white);
   box-shadow: var(--shadow);
-  height: 70px;
-  grid-area: cabecalho;
+  /* height: 70px; */
+  /* grid-area: cabecalho; */
   z-index: 2;
   box-shadow: 0px 1px 9px -2px rgba(0, 0, 0, 0.75);
 }
@@ -97,7 +97,8 @@ a {
 .local-highlights {
   background-image: url("./assets/img/sustentability-bg.jpg");
   min-height: 90vh;
-  margin-top: -1.4rem !important;
+  /* margin-top: -1.4rem !important; */
+  /* margin-top: 0px !important; */
   padding: 0px !important;
   background-repeat: no-repeat;
   background-size: 100vw 90vh;
@@ -127,7 +128,7 @@ a {
 }
 
 .Search {
-  width: 75%;
+  /* width: 75%; */
   border-radius: 50px !important;
   background-color: var(--white);
   margin: 24px 0px;
@@ -135,24 +136,24 @@ a {
 }
 
 .btn-category {
-  height: 4.3rem;
+  /* height: 5.2rem !important; */
+  width: 100%;
+  height: 100%;
   border: none !important;
   border-radius: 50px !important;
-  padding: 0px 52px;
+  padding: 16px;
   background-color: var(--white);
 }
 
 .btn-search {
   height: 3rem;
   width: 3rem;
-  border: none !important;
-  background-color: var(--btn-primary);
+  /* border: none !important; */
+  background-color: var(--btn-primary) !important;
   border-radius: 50px;
-  /* margin: 15px; */
-  box-shadow: var(--shadow);
-  /* margin: 8px; */
-  color: var(--white);
-  box-shadow: 0px 5px 5px 0px #40916c;
+  box-shadow: var(--shadow) !important;
+  color: var(--white) !important;
+  box-shadow: 0px 5px 5px 0px #40916c !important;
 }
 
 .btn-search.disabled-link {
@@ -169,24 +170,26 @@ a {
   cursor: pointer;
 }
 
-input[type="search"] {
+.search {
   background-color: var(--white);
-  height: 4.3rem;
+  /* height: 4.5rem; */
+  /* height: 100%;
+  width: 70%; */
   border: none;
-  background-repeat: no-repeat;
+  /* background-repeat: no-repeat;
   background-size: 18px 18px;
-  background-position: 98% center;
+  background-position: 98% center; */
   border-radius: 50px !important;
 }
 
-input[type="search"]:hover,
+.search:hover,
 .btn-category:hover,
 .highlight:hover {
   background-color: #22222210;
   cursor: pointer;
 }
 
-input[type="search"]:focus,
+.search:focus,
 .btn-search:focus,
 .btn-category:focus,
 .btn-save:focus {
@@ -197,7 +200,7 @@ input[type="search"]:focus,
 }
 
 .Logo {
-  height: 2.5em;
+  height: 2em;
 }
 
 .highlights-group {

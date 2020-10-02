@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Redirect } from "react-router-dom";
 import API from "../API";
-import { userInfo } from "../auth/Validations";
+// import { userInfo } from "../auth/Validations";
 import FormPlaces from "../templates/FormPlaces";
 
 let auxWorkingDays = ["seg", "ter", "qua", "qui", "sex", "sab", "dom"];
@@ -34,7 +34,7 @@ export default (props) => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    setUser(userInfo());
+    // setUser(userInfo());
     return () => {};
   }, []);
 
