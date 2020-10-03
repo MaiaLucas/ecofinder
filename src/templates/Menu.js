@@ -2,8 +2,6 @@ import React from "react";
 import throwAway from "../assets/img/throw_away.png";
 import onlineArticle from "../assets/img/online_article.png";
 import amongNature from "../assets/img/among_nature.png";
-import Highlights from "./Highlights";
-import InformationCard from "./InformationCard";
 import Search from "../components/Search";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -55,8 +53,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Menu() {
   let history = useHistory();
-  const handleClick = (page) => {
-    history.push(`/place/${page}/list`);
+  const handleClick = (type) => {
+    // history.push(`/place/${page}/list`);
+    history.push(`/places`, { type: type });
   };
 
   const classes = useStyles();
@@ -66,7 +65,7 @@ export default function Menu() {
         <Grid item xs={12}>
           <Paper className={clsx("principal")}>
             <Grid container className={classes.search}>
-              <Grid item xs={5}>
+              <Grid item xs={4}>
                 <Search />
               </Grid>
             </Grid>

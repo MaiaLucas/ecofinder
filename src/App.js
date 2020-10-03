@@ -21,7 +21,8 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/place" exact component={RegisterPlace} />
         <Route path="/place/:id" exact component={RegisterPlace} />
-        <Route path={"/place/:id?/:place?"} component={Local} />
+        {/* <Route path={"/place/:id?/:place?"} component={Local} /> */}
+        <Route path={"/places"} component={Local} />
         <Route path={"/detail/:id"} component={PlaceDetail} />
         <Footer />
       </Router>

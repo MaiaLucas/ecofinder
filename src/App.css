@@ -93,12 +93,9 @@ a {
   min-height: calc(100vh - 6.1rem);
 }
 
-.principal,
-.local-highlights {
+.principal {
   background-image: url("./assets/img/sustentability-bg.jpg");
   min-height: 90vh;
-  /* margin-top: -1.4rem !important; */
-  /* margin-top: 0px !important; */
   padding: 0px !important;
   background-repeat: no-repeat;
   background-size: 100vw 90vh;
@@ -106,16 +103,17 @@ a {
 }
 
 .local-highlights {
-  background-image: url("./assets/img/places_highlights.jpg");
-  color: var(--white);
+  color: var(--white) !important;
+  min-height: 90vh;
+  font-family: "Roboto";
   text-shadow: 2px 2px var(--secondary);
-  margin-top: 0px !important;
   z-index: 99999999 !important;
 }
+
 .local-highlights h1 {
   font-size: 100px;
 }
-.local-highlights h6 {
+.local-highlights h4 {
   font-size: 30px;
 }
 
@@ -128,10 +126,10 @@ a {
 }
 
 .Search {
-  /* width: 75%; */
+  height: 8ch;
   border-radius: 50px !important;
   background-color: var(--white);
-  margin: 24px 0px;
+  margin: 12px 0px;
   border-bottom: 1px solid var(--black) !important;
 }
 
@@ -146,11 +144,13 @@ a {
 }
 
 .btn-search {
-  height: 3rem;
-  width: 3rem;
-  /* border: none !important; */
+  height: 3rem !important;
+  min-width: 3rem !important;
+  margin-right: 8px !important;
+  font-family: "Roboto";
+  font-size: 16px;
+  text-decoration: none !important;
   background-color: var(--btn-primary) !important;
-  border-radius: 50px;
   box-shadow: var(--shadow) !important;
   color: var(--white) !important;
   box-shadow: 0px 5px 5px 0px #40916c !important;
@@ -172,13 +172,12 @@ a {
 
 .search {
   background-color: var(--white);
-  /* height: 4.5rem; */
-  /* height: 100%;
-  width: 70%; */
+  height: 100%;
+  width: 85%;
+  padding: 0px 16px;
+  font-size: 35px !important;
+  margin: 0px 15px;
   border: none;
-  /* background-repeat: no-repeat;
-  background-size: 18px 18px;
-  background-position: 98% center; */
   border-radius: 50px !important;
 }
 
