@@ -1,12 +1,12 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect, useLocation } from "react-router-dom";
-import Card from "../templates/Card";
 import API from "../API";
 import Loading from "../templates/Loading";
 import clsx from "clsx";
 import { Grid, makeStyles, Paper, Typography } from "@material-ui/core";
 import amongNature from "../assets/img/places_highlights.jpg";
 import TYPES from "../constants/types";
+import GroupPlace from "../templates/GroupPlace";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,26 +46,28 @@ const useStyles = makeStyles((theme) => ({
   },
   typeTitle: {
     width: "74vw",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    // display: "flex",
+    // alignItems: "center",
+    // justifyContent: "center",
     // margin: theme.spacing(2),
+    fontFamily: "Poppins",
     background: "red",
   },
   placesGroup: {
     display: "flex",
-    alignItems: "center",
+    // flexDirection: "column",
+    alignItems: "start",
     justifyContent: "center",
     flexWrap: "wrap",
   },
   place: {
     // padding: theme.spacing(2),
-    width: "25%",
+    width: "25ch",
     margin: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
     // height: "45ch",
-    background: "#222",
+    background: "#292",
     "& img": {
       height: "85%",
       display: "block",
@@ -108,6 +110,9 @@ export default (props) => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [redirect, setRedirect] = useState(false);
+  const [garbageCollect, setGarbageCollect] = useState([]);
+  const [experience, setExperience] = useState([]);
+  const [store, setStore] = useState([]);
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -116,8 +121,15 @@ export default (props) => {
       .then(
         (result) => {
           if (result.length && (type || local)) {
+            if (local && !type) {
+              setGarbageCollect(result[0]);
+              setExperience(result[1]);
+              setStore(result[2]);
+            } else {
+              setItems(result);
+            }
+
             setIsLoaded(true);
-            setItems(result);
           } else {
             setRedirect(true);
           }
@@ -134,8 +146,6 @@ export default (props) => {
   } else if (!isLoaded && !redirect) {
     return <Loading />;
   } else if (isLoaded) {
-    let lastType = 0;
-    let cardClass = "";
     return (
       <div className={classes.root}>
         <Grid container>
@@ -151,27 +161,27 @@ export default (props) => {
         <Grid container className={classes.places}>
           <Grid item xs={9}>
             <Paper className={classes.placesGroup}>
-              {items.map((place) => {
-                const config = { ...place };
-                cardClass = "";
-                let title = "";
-                if (lastType !== config.type && local) {
-                  cardClass = lastType !== 0 ? classes.spacing : "";
-                  lastType = config.type;
-                  title = TYPES[config.type - 1];
-                }
-                return (
-                  <div key={config.id} className={clsx(cardClass)}>
-                    {title ? (
-                      <div className={classes.typeTitle}>
-                        <Typography variant={"h4"}>{title}</Typography>
-                      </div>
-                    ) : (
-                      <div className={classes.place}>ok</div>
-                    )}
-                  </div>
-                );
-              })}
+              {local && !type ? (
+                <>
+                  {garbageCollect.length ? (
+                    <GroupPlace title={TYPES[0]} arrPlaces={garbageCollect} />
+                  ) : (
+                    ""
+                  )}
+                  {experience.length ? (
+                    <GroupPlace title={TYPES[1]} arrPlaces={experience} />
+                  ) : (
+                    ""
+                  )}
+                  {store.length ? (
+                    <GroupPlace title={TYPES[2]} arrPlaces={store} />
+                  ) : (
+                    ""
+                  )}
+                </>
+              ) : (
+                <GroupPlace title="" arrPlaces={items} perPage={items.length} />
+              )}
             </Paper>
           </Grid>
         </Grid>
@@ -181,27 +191,3 @@ export default (props) => {
     return <Redirect to={"/"} />;
   }
 };
-
-// return (
-//   <div className="Menu">
-//     <div className="local-highlights d-flex justify-content-center mb-4">
-//       <div className="d-flex flex-column justify-content-center align-items-center">
-//         <h1>{pageInfo[type].headline}</h1>
-//         <h6>{pageInfo[type].subheadline}</h6>
-//       </div>
-//     </div>
-
-//     <div className="view-cards">
-//       <div className="d-flex justify-content-center flex-wrap">
-//         {items.map((place) => {
-//           const config = { ...place };
-//           return (
-//             <div key={place.id}>
-//               <Card config={config} />
-//             </div>
-//           );
-//         })}
-//       </div>
-//     </div>
-//   </div>
-// );
