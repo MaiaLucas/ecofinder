@@ -159,7 +159,7 @@ export default (props) => {
           </Grid>
         </Grid>
         <Grid container className={classes.places}>
-          <Grid item xs={9}>
+          <Grid item xs={12}>
             <Paper className={classes.placesGroup}>
               {local && !type ? (
                 <>

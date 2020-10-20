@@ -80,7 +80,6 @@ export default function Menu() {
               <img src={onlineArticle} alt="Headline" />
               <Paper square elevation={0} className={classes.header}>
                 <Typography variant="h5">Postos de Coleta</Typography>
-                <Typography variant="h6">Subheadline</Typography>
               </Paper>
             </Paper>
           </Grid>
@@ -92,7 +91,6 @@ export default function Menu() {
               <img src={throwAway} alt="Headline" />
               <Paper square elevation={0} className={classes.header}>
                 <Typography variant="h5">Experiências</Typography>
-                <Typography variant="h6">Subheadline</Typography>
               </Paper>
             </Paper>
           </Grid>
@@ -104,7 +102,6 @@ export default function Menu() {
               <img src={amongNature} alt="Headline" />
               <Paper square elevation={0} className={classes.header}>
                 <Typography variant="h5">Lojas</Typography>
-                <Typography variant="h6">Subheadline</Typography>
               </Paper>
             </Paper>
           </Grid>

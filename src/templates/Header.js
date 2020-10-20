@@ -75,8 +75,8 @@ export default (props) => {
         </MenuItem>
       ) : (
         <div>
-          <Link to={"/login"}>
-            <MenuItem className={classes.link}>Editar conta</MenuItem>
+          <Link to={"/place"}>
+            <MenuItem className={classes.link}>Cadastrar Local</MenuItem>
           </Link>
           <MenuItem onClick={logout}>Logout</MenuItem>
         </div>

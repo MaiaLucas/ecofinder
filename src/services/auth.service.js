@@ -55,12 +55,12 @@ async function register(config) {
           return result.message;
         }
         return;
-      },
-      (error) => {
-        console.log(error);
-
-        return "Erro! Favor contactar a equipe de suporte";
       }
+      // (error) => {
+      //   console.log(error);
+
+      //   return "Erro! Favor contactar a equipe de suporte";
+      // }
     );
 }
 
