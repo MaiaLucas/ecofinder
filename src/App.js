@@ -2,19 +2,31 @@ import React from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import Header from "./templates/Header";
 import Menu from "./templates/Menu";
-import Places from "./templates/Places";
 import Local from "./components/Local";
 
 import "./App.css";
+import Footer from "./templates/Footer";
+import RegisterPlace from "./components/RegisterPlace";
+import PlaceDetail from "./templates/PlaceDetail";
+import Login from "./templates/Login";
+import Register from "./templates/Register";
 
 function App() {
   return (
-    <Router>
-      <Header />
-      <Route path="/" exact component={Menu} />
-      <Route path="/place" exact component={Places} />
-      <Route path="/place/:id" component={Local} />
-    </Router>
+    <>
+      <Router>
+        <Header />
+        <Route path="/" exact component={Menu} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <Route path="/place" exact component={RegisterPlace} />
+        <Route path="/place/:id" exact component={RegisterPlace} />
+        {/* <Route path={"/place/:id?/:place?"} component={Local} /> */}
+        <Route path={"/places"} component={Local} />
+        <Route path={"/detail/:id"} component={PlaceDetail} />
+        <Footer />
+      </Router>
+    </>
   );
 }
 
