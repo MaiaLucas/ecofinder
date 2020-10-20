@@ -7,8 +7,7 @@ export default function Highlights(props) {
       className="card highlight"
       to={{
         pathname: props.target,
-        headline: props.headline,
-        subheadline: props.subheadline,
+        id: props.id,
       }}
     >
       <img src={props.img} className="card-img-top" alt="" />
