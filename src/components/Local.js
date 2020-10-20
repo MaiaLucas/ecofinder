@@ -117,6 +117,7 @@ export default (props) => {
 
   useEffect(() => {
     fetch(`${API}/place${type !== 0 ? "/" + type : ""}/list/${local}`)
+
       .then((res) => res.json())
       .then(
         (result) => {
