@@ -27,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     color: theme.palette.text.secondary,
     height: "45ch",
+    minHeight: "45ch",
+    minWidth: "400px",
     background: "#222",
     "& img": {
       height: "85%",
@@ -43,7 +45,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
   },
   highlights: {
+    display: "flex",
     justifyContent: "center",
+    flexWrap: "wrap",
   },
   search: {
     display: "flex",
@@ -64,7 +68,7 @@ export default function Menu() {
       <Grid container>
         <Grid item xs={12}>
           <Paper className={clsx("principal")}>
-            <Grid container className={classes.search}>
+            <Grid container className={clsx(classes.search, "hidden-field")}>
               <Grid item xs={4}>
                 <Search />
               </Grid>

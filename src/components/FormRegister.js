@@ -74,15 +74,24 @@ export default (props) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const auth = await AuthService.register(values);
+    console.log(values);
+    const auth = await AuthService.register({
+      username: values.username,
+      email: values.email,
+      password: values.password,
+      confirmPassword: values.confirmPassword,
+    });
     if (typeof auth === "string") {
       setMessage(auth);
       setOpen(true);
       return;
     }
-    history.push("/");
 
-    window.location.reload();
+    console.log(auth);
+    // history.push("/");
+
+    // window.location.reload();
+    return;
   };
 
   return (

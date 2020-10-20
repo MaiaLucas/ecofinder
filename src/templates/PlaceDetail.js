@@ -104,7 +104,7 @@ export default () => {
     setIsLoaded(true);
 
     return () => {};
-  }, []);
+  }, [id, objPlace]);
 
   if (isLoaded) {
     return (
@@ -134,7 +134,7 @@ export default () => {
         <Grid item xs={10} className="place-details-content">
           <h1>
             {objPlace.title}
-            {objPlace.author == user ? (
+            {objPlace.author === user ? (
               <Link className={classes.edit} to={"/place/" + id}>
                 <FiEdit size={32} color="#15B6D6" />
               </Link>

@@ -35,32 +35,32 @@ async function login(config) {
 }
 
 async function register(config) {
+  console.log(config);
   return await fetch(`${API}/signup`, {
     method: "POST",
     headers: {
       "Content-type": "application/json;charset=UTF-8",
     },
-    body: JSON.stringify({
-      username: config.username,
-      email: config.email,
-      password: config.password,
-      confirmPassword: config.password,
-    }),
+    body: JSON.stringify(config),
   })
-    .then((res) => res.json())
+    .then((res) => {
+      console.log(res);
+      return res.json();
+    })
     .then(
       (result) => {
-        if (result.code >= 400) {
-          console.log(result.message);
-          return result.message;
+        console.log(result);
+        if (result.code >= 400 || result.status >= 400) {
+          return result.message || result.statusText;
         }
-        return;
-      }
-      // (error) => {
-      //   console.log(error);
 
-      //   return "Erro! Favor contactar a equipe de suporte";
-      // }
+        localStorage.setItem("user", JSON.stringify(result));
+      },
+      (error) => {
+        console.log(error);
+
+        return "Erro! Favor contactar a equipe de suporte";
+      }
     );
 }
 

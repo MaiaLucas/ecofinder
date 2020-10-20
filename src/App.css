@@ -181,6 +181,12 @@ a {
   border-radius: 50px !important;
 }
 
+@media (max-width: 420px) {
+  .hidden-field {
+    display: none !important;
+  }
+}
+
 .search:hover,
 .btn-category:hover,
 .highlight:hover {
