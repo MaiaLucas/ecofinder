@@ -1,13 +1,22 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    "& > * + *": {
+      marginLeft: theme.spacing(2),
+    },
+  },
+}));
 
 export default (params) => {
+  const classes = useStyles();
+
   return (
-    <div className="Menu">
-      <div className="container d-flex justify-content-center p-4">
-        <div className="spinner-border text-success" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
-      </div>
+    <div className={classes.root}>
+      <CircularProgress color="secondary" />
     </div>
   );
 };

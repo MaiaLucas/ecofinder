@@ -1,26 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import amongNature from "../assets/img/among_nature.png";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+
+const useStyles = makeStyles((theme) => ({
+  header: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 50,
+    // paddingLeft: theme.spacing(4),
+    backgroundColor: theme.palette.background.default,
+  },
+  img: {
+    height: 255,
+    maxWidth: 400,
+    overflow: "hidden",
+    display: "block",
+    width: "100%",
+  },
+}));
 
 export default (props) => {
   const info = props.config;
 
   const images = info.images_url ? info.images_url.split(";") : "";
+
+  const classes = useStyles();
+
   return (
     <Link
       to={{
         pathname: "/detail/" + info.id,
-        objPlace: props.config,
       }}
       className="link-place-detail"
     >
-      <div
-        className="d-flex flex-column align-items-center p-0 card-place"
-        id={info.id}
-      >
-        <img src={images[0] || amongNature} className="img-fluid" alt="" />
-        <b>{info.title}</b>
-      </div>
+      <img className={classes.img} src={images[0] || amongNature} alt="" />
+      <Paper square elevation={0} className={classes.header}>
+        <Typography>{info.title}</Typography>
+      </Paper>
     </Link>
   );
 };

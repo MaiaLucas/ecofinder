@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Redirect } from "react-router-dom";
 import API from "../API";
-import { userInfo } from "../auth/Validations";
+import AuthService from "../services/auth.service";
 import FormPlaces from "../templates/FormPlaces";
 
 let auxWorkingDays = ["seg", "ter", "qua", "qui", "sex", "sab", "dom"];
@@ -24,7 +24,7 @@ export default (props) => {
     opening_days: "",
   };
 
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState({
     class: "alert-danger error hide",
@@ -34,26 +34,34 @@ export default (props) => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    setUser(userInfo());
+    let currentUser = AuthService.getCurrentUser();
+    if (currentUser) {
+      setUser({
+        userId: currentUser.id,
+        token: currentUser.token,
+      });
+    }
+    setIsLoaded(true);
     return () => {};
   }, []);
 
   if (params.id) {
     useEffect(() => {
+      let currentUser = AuthService.getCurrentUser();
       const setDefaultsValues = () => {
         fetch(`${API}/place/${params.id}`, {
           method: "GET",
           headers: {
             "Content-type": "application/json;charset=UTF-8",
-            authorization: `bearer ${user.token}`,
+            authorization: `bearer ${currentUser.token}`,
             mode: "cors",
           },
         })
           .then((res) => res.json())
           .then(
             (result) => {
-              setObjCadastro({ ...result });
               setIsLoaded(true);
+              setObjCadastro({ ...result });
             },
             (error) => {
               setIsLoaded(true);
@@ -63,7 +71,7 @@ export default (props) => {
       };
       setDefaultsValues();
       return () => {};
-    }, [params.id, user.token]);
+    }, [params.id]);
   }
 
   const handleCheckboxChange = useCallback(
@@ -100,7 +108,6 @@ export default (props) => {
       })
       .join(",");
 
-    // form["author"] = "cb6f9862-c71c-4adf-b190-dfad6f17dff5";
     form["author"] = user.userId;
 
     setObjCadastro(form);

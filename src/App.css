@@ -24,8 +24,8 @@ body {
 .Header {
   background-color: var(--white);
   box-shadow: var(--shadow);
-  height: 70px;
-  grid-area: cabecalho;
+  /* height: 70px; */
+  /* grid-area: cabecalho; */
   z-index: 2;
   box-shadow: 0px 1px 9px -2px rgba(0, 0, 0, 0.75);
 }
@@ -93,11 +93,9 @@ a {
   min-height: calc(100vh - 6.1rem);
 }
 
-.principal,
-.local-highlights {
+.principal {
   background-image: url("./assets/img/sustentability-bg.jpg");
   min-height: 90vh;
-  margin-top: -1.4rem !important;
   padding: 0px !important;
   background-repeat: no-repeat;
   background-size: 100vw 90vh;
@@ -105,16 +103,17 @@ a {
 }
 
 .local-highlights {
-  background-image: url("./assets/img/places_highlights.jpg");
-  color: var(--white);
+  color: var(--white) !important;
+  min-height: 90vh;
+  font-family: "Roboto";
   text-shadow: 2px 2px var(--secondary);
-  margin-top: 0px !important;
   z-index: 99999999 !important;
 }
+
 .local-highlights h1 {
   font-size: 100px;
 }
-.local-highlights h6 {
+.local-highlights h4 {
   font-size: 30px;
 }
 
@@ -127,32 +126,34 @@ a {
 }
 
 .Search {
-  width: 75%;
+  height: 8ch;
   border-radius: 50px !important;
   background-color: var(--white);
-  margin: 24px 0px;
+  margin: 12px 0px;
   border-bottom: 1px solid var(--black) !important;
 }
 
 .btn-category {
-  height: 4.3rem;
+  /* height: 5.2rem !important; */
+  width: 100%;
+  height: 100%;
   border: none !important;
   border-radius: 50px !important;
-  padding: 0px 52px;
+  padding: 16px;
   background-color: var(--white);
 }
 
 .btn-search {
-  height: 3rem;
-  width: 3rem;
-  border: none !important;
-  background-color: var(--btn-primary);
-  border-radius: 50px;
-  /* margin: 15px; */
-  box-shadow: var(--shadow);
-  /* margin: 8px; */
-  color: var(--white);
-  box-shadow: 0px 5px 5px 0px #40916c;
+  height: 3rem !important;
+  min-width: 3rem !important;
+  margin-right: 8px !important;
+  font-family: "Roboto";
+  font-size: 16px;
+  text-decoration: none !important;
+  background-color: var(--btn-primary) !important;
+  box-shadow: var(--shadow) !important;
+  color: var(--white) !important;
+  box-shadow: 0px 5px 5px 0px #40916c !important;
 }
 
 .btn-search.disabled-link {
@@ -169,24 +170,25 @@ a {
   cursor: pointer;
 }
 
-input[type="search"] {
+.search {
   background-color: var(--white);
-  height: 4.3rem;
+  height: 100%;
+  width: 85%;
+  padding: 0px 16px;
+  font-size: 35px !important;
+  margin: 0px 15px;
   border: none;
-  background-repeat: no-repeat;
-  background-size: 18px 18px;
-  background-position: 98% center;
   border-radius: 50px !important;
 }
 
-input[type="search"]:hover,
+.search:hover,
 .btn-category:hover,
 .highlight:hover {
   background-color: #22222210;
   cursor: pointer;
 }
 
-input[type="search"]:focus,
+.search:focus,
 .btn-search:focus,
 .btn-category:focus,
 .btn-save:focus {
@@ -197,7 +199,7 @@ input[type="search"]:focus,
 }
 
 .Logo {
-  height: 2.5em;
+  height: 2em;
 }
 
 .highlights-group {
@@ -216,14 +218,6 @@ input[type="search"]:focus,
   height: 18rem;
   box-shadow: var(--shadow);
   border-radius: 20px;
-}
-
-.card-place {
-  height: 18rem;
-  width: 18rem;
-  margin: 8px;
-  overflow-x: hidden;
-  transition: width 0.5s, height 0.5s, font-size 0.5s;
 }
 
 .card-place:hover {
@@ -338,4 +332,171 @@ input[type="search"]:focus,
 
 .alert-save.error {
   box-shadow: 2px 2px 2px 0px #f87979;
+}
+
+.place-details {
+  width: 700px;
+  margin: 24px auto;
+
+  background: #ffffff;
+  border: 1px solid #d3e2e5;
+  border-radius: 20px;
+
+  overflow: hidden;
+}
+
+.place-details > img {
+  width: 100%;
+  height: 80vh;
+  object-fit: cover;
+}
+
+.place-details .images {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  column-gap: 16px;
+
+  margin: 16px 40px 0;
+}
+
+.place-details .images button {
+  border: 0;
+  height: 88px;
+  background: none;
+  cursor: pointer;
+  border-radius: 20px;
+  overflow: hidden;
+  outline: none;
+
+  opacity: 0.6;
+}
+
+.place-details .images button.active {
+  opacity: 1;
+}
+
+.place-details .images button img {
+  width: 100%;
+  height: 88px;
+  object-fit: cover;
+}
+
+.place-details .place-details-content {
+  padding: 80px;
+}
+
+.place-details .place-details-content h1 {
+  color: #4d6f80;
+  font-size: 54px;
+  line-height: 54px;
+  margin-bottom: 8px;
+}
+
+.place-details .place-details-content p {
+  line-height: 28px;
+  color: #5c8599;
+  margin-top: 24px;
+}
+
+.place-details .place-details-content .map-container {
+  margin-top: 64px;
+  background: #e6f7fb;
+  border: 1px solid #b3dae2;
+  border-radius: 20px;
+}
+
+.place-details .place-details-content .map-container footer {
+  padding: 20px 0;
+  text-align: center;
+}
+
+.place-details .place-details-content .map-container footer a {
+  line-height: 24px;
+  color: #0089a5;
+  text-decoration: none;
+}
+
+.place-details .place-details-content .map-container .leaflet-container {
+  border-bottom: 1px solid #dde3f0;
+  border-radius: 20px;
+}
+
+.place-details .place-details-content hr {
+  width: 100%;
+  height: 1px;
+  border: 0;
+  background: #d3e2e6;
+  margin: 64px 0;
+}
+
+.place-details .place-details-content h2 {
+  font-size: 36px;
+  line-height: 46px;
+  color: #4d6f80;
+}
+
+.place-details .place-details-content .open-details {
+  margin-top: 24px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+}
+
+.place-details .place-details-content .open-details div {
+  padding: 32px 24px;
+  border-radius: 20px;
+  line-height: 28px;
+}
+
+.place-details .place-details-content .open-details div svg {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.place-details .place-details-content .open-details div.hour {
+  background: linear-gradient(149.97deg, #e6f7fb 8.13%, #ffffff 92.67%);
+  border: 1px solid #b3dae2;
+  color: #5c8599;
+}
+
+.place-details .place-details-content .open-details div.open-on-weekends {
+  background: linear-gradient(154.16deg, #edfff6 7.85%, #ffffff 91.03%);
+  border: 1px solid #a1e9c5;
+  color: #37c77f;
+}
+.place-details
+  .place-details-content
+  .open-details
+  div.open-on-weekends.dont-open {
+  background: linear-gradient(154.16deg, #fdf0f5 7.85%, #ffffff 91.03%);
+  border: 1px solid #ffbcd4;
+  color: #ff669d;
+}
+
+.place-details .place-details-content button.contact-button {
+  margin-top: 64px;
+
+  width: 100%;
+  height: 64px;
+  border: 0;
+  cursor: pointer;
+  background: #3cdc8c;
+  border-radius: 20px;
+  color: #ffffff;
+  font-weight: 800;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: background-color 0.2s;
+}
+
+.place-details .place-details-content button.contact-button svg {
+  margin-right: 16px;
+}
+
+.place-details .place-details-content button.contact-button:hover {
+  background: #36cf82;
 }
