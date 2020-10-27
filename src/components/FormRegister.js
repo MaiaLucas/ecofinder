@@ -74,7 +74,6 @@ export default (props) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(values);
     const auth = await AuthService.register({
       username: values.username,
       email: values.email,
@@ -87,10 +86,9 @@ export default (props) => {
       return;
     }
 
-    console.log(auth);
-    // history.push("/");
+    history.push("/login");
 
-    // window.location.reload();
+    window.location.reload();
     return;
   };
 

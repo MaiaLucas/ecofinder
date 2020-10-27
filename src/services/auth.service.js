@@ -35,7 +35,6 @@ async function login(config) {
 }
 
 async function register(config) {
-  console.log(config);
   return await fetch(`${API}/signup`, {
     method: "POST",
     headers: {
@@ -44,21 +43,15 @@ async function register(config) {
     body: JSON.stringify(config),
   })
     .then((res) => {
-      console.log(res);
       return res.json();
     })
     .then(
       (result) => {
-        console.log(result);
         if (result.code >= 400 || result.status >= 400) {
           return result.message || result.statusText;
         }
-
-        localStorage.setItem("user", JSON.stringify(result));
       },
       (error) => {
-        console.log(error);
-
         return "Erro! Favor contactar a equipe de suporte";
       }
     );
