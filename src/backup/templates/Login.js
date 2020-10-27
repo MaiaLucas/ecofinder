@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import lotus from "../assets/img/lotus_small.png";
-import FormRegister from "../components/FormRegister";
+import FormLogin from "../backup/components/FormLogin";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,9 +42,9 @@ export default (props) => {
             m={1}
             p={1}
           >
-            <img src={lotus} alt={"register"} />
-            Sign Up
-            <FormRegister />
+            <img src={lotus} alt={"login"} />
+            <b>Login</b>
+            <FormLogin />
           </Box>
         </CardContent>
       </Card>

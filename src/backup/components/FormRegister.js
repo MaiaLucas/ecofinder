@@ -12,7 +12,7 @@ import AccountCircleOutlined from "@material-ui/icons/AccountCircleOutlined";
 import ChildCareOutlined from "@material-ui/icons/ChildCareOutlined";
 import { Button, Snackbar } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import AuthService from "../services/auth.service";
+import AuthService from "../../services/auth.service";
 import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({

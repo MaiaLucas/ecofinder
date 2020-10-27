@@ -2,7 +2,7 @@ import React from "react";
 import throwAway from "../assets/img/throw_away.png";
 import onlineArticle from "../assets/img/online_article.png";
 import amongNature from "../assets/img/among_nature.png";
-import Search from "../components/Search";
+import Search from "../backup/components/Search";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
