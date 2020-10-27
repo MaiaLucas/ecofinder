@@ -75,7 +75,7 @@ export default function Menu() {
             </Grid>
           </Paper>
         </Grid>
-        <Grid container className={classes.highlights}>
+        <Grid container className={clsx(classes.highlights, "menu-highlight")}>
           <Grid item xs={3}>
             <Paper
               className={classes.highlightsItem}

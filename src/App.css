@@ -102,6 +102,18 @@ a {
   background-position: 98% center;
 }
 
+.menu-highlight {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 420px) {
+  .menu-highlight {
+    flex-direction: column;
+  }
+}
+
 .local-highlights {
   color: var(--white) !important;
   min-height: 90vh;
