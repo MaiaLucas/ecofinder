@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	appbar: {
 		background: "#f9f9f9ff",
-		color: "green",
+		color: "#44C969",
 	},
 	menuButton: {
 		marginLeft: theme.spacing(2),
@@ -95,7 +95,7 @@ export default (props) => {
 	}, [open]);
 
 	return (
-		<AppBar position="sticky" className={classes.appbar}>
+		<AppBar position="fixed" className={classes.appbar}>
 			<Toolbar>
 				<Typography
 					variant="h6"
