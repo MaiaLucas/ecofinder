@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
-import logo from "../assets/img/ecofinder_logo.png";
+import React, { useEffect, useRef, useState } from "react";
 import AuthService from "../services/auth.service";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import { AppBar, Button, Menu, MenuItem, Typography } from "@material-ui/core";
-import clsx from "clsx";
-import { Link, useHistory } from "react-router-dom";
-import { AccountCircle } from "@material-ui/icons";
+import { AppBar, Button, Typography } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import MenuIcon from "@material-ui/icons/Menu";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import Popper from "@material-ui/core/Popper";
+import MenuItem from "@material-ui/core/MenuItem";
+import MenuList from "@material-ui/core/MenuList";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -19,28 +22,38 @@ const useStyles = makeStyles((theme) => ({
 		color: "green",
 	},
 	menuButton: {
-		marginRight: theme.spacing(2),
+		marginLeft: theme.spacing(2),
 	},
 	title: {
 		flexGrow: 1,
 	},
+	paper: {
+		marginRight: theme.spacing(2),
+	},
+	user: {
+		fontSize: "18px",
+		marginRight: theme.spacing(2),
+	},
 }));
 export default (props) => {
 	const classes = useStyles();
-	const menuId = "primary-search-account-menu";
 
+	const { push } = useHistory();
 	const [user, setUser] = useState();
 	const [hasUser, setHasUser] = useState(false);
-	const { goBack, push } = useHistory();
+	const [open, setOpen] = useState(false);
+	const anchorRef = useRef(null);
 
 	useEffect(() => {
-		let currentUser = AuthService.getCurrentUser();
-		if (currentUser) {
-			setUser({
-				username: currentUser.username,
+		(async () => {
+			await AuthService.getCurrentUser().then((req, res) => {
+				if (req.data) {
+					const { username } = AuthService.userInfo();
+					setUser(username);
+				}
+				setHasUser(req.data);
 			});
-			setHasUser(true);
-		}
+		})();
 		return () => {};
 	}, []);
 
@@ -52,18 +65,38 @@ export default (props) => {
 	const login = (e) => {
 		push("/login");
 	};
+	const handleToggle = () => {
+		setOpen((prevOpen) => !prevOpen);
+	};
+
+	const handleClose = (event) => {
+		if (anchorRef.current && anchorRef.current.contains(event.target)) {
+			return;
+		}
+
+		setOpen(false);
+	};
+
+	function handleListKeyDown(event) {
+		if (event.key === "Tab") {
+			event.preventDefault();
+			setOpen(false);
+		}
+	}
+
+	// return focus to the button when we transitioned from !open -> open
+	const prevOpen = useRef(open);
+	useEffect(() => {
+		if (prevOpen.current === true && open === false) {
+			anchorRef.current.focus();
+		}
+
+		prevOpen.current = open;
+	}, [open]);
 
 	return (
 		<AppBar position="sticky" className={classes.appbar}>
 			<Toolbar>
-				<IconButton
-					edge="start"
-					className={classes.menuButton}
-					color="inherit"
-					aria-label="menu"
-				>
-					<MenuIcon />
-				</IconButton>
 				<Typography
 					variant="h6"
 					className={classes.title}
@@ -76,48 +109,52 @@ export default (props) => {
 						Login
 					</Button>
 				) : (
-					<div>Olá, {user.username}</div>
+					<>
+						<IconButton
+							edge="start"
+							className={classes.menuButton}
+							color="inherit"
+							aria-label="menu"
+							ref={anchorRef}
+							aria-controls={open ? "menu-list-grow" : undefined}
+							aria-haspopup="true"
+							onClick={handleToggle}
+						>
+							<div className={classes.user}>Olá, {user}</div>
+							<MenuIcon />
+						</IconButton>
+						<Popper
+							open={open}
+							anchorEl={anchorRef.current}
+							role={undefined}
+							transition
+							disablePortal
+						>
+							{({ TransitionProps, placement }) => (
+								<Grow
+									{...TransitionProps}
+									style={{
+										transformOrigin:
+											placement === "bottom" ? "center top" : "center bottom",
+									}}
+								>
+									<Paper>
+										<ClickAwayListener onClickAway={handleClose}>
+											<MenuList
+												autoFocusItem={open}
+												id="menu-list-grow"
+												onKeyDown={handleListKeyDown}
+											>
+												<MenuItem onClick={logout}>Logout</MenuItem>
+											</MenuList>
+										</ClickAwayListener>
+									</Paper>
+								</Grow>
+							)}
+						</Popper>
+					</>
 				)}
 			</Toolbar>
 		</AppBar>
 	);
 };
-
-// return (
-//   <div className={clsx(classes.root)}>
-//     <Toolbar variant="dense" className={clsx(classes.toolbar, "Header")}>
-//       <Link to={"/"}>
-//         <IconButton
-//           edge="start"
-//           className={classes.menuButton}
-//           color="inherit"
-//           aria-label="menu"
-//           // onClick={home}
-//         >
-//           <img
-//             src={logo}
-//             alt="grundschrift-font"
-//             border="0"
-//             className="Logo"
-//           />
-//           {/* <MenuIcon /> */}
-//         </IconButton>
-//       </Link>
-
-//       <div className={"username"}>
-//         {hasUser ? `Olá, ${user.username}` : ""}
-//         <IconButton
-//           edge="end"
-//           aria-label="account of current user"
-//           aria-controls={menuId}
-//           aria-haspopup="true"
-//           onClick={handleProfileMenuOpen}
-//           color="inherit"
-//         >
-//           <AccountCircle fontSize="large" />
-//         </IconButton>
-//       </div>
-//     </Toolbar>
-//     {renderMenu}
-//   </div>
-// );
