@@ -95,11 +95,11 @@ a {
 
 .principal {
 	background-image: url("./assets/img/sustentability-bg.jpg");
-	min-height: 90vh;
+	min-height: 100vh;
 	padding: 0px !important;
 	background-repeat: no-repeat;
-	background-size: 100vw 90vh;
-	background-position: 98% center;
+	background-size: 100vw 100vh;
+	background-position: 100% center;
 	display: flex;
 	justify-content: center;
 	align-items: center;
