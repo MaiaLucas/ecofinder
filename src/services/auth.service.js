@@ -1,3 +1,4 @@
+import Axios from "axios";
 import API from "../API";
 
 function logout() {
@@ -27,17 +28,12 @@ async function login(config) {
 				return result;
 			},
 			(error) => {
-				console.log("errroooo");
-				console.log(error);
 				return "Erro! Favor contactar a equipe de suporte";
 			}
 		);
 }
 
 async function register(config) {
-	// return await API.post("/signup", config).then((res) => {
-	// 	console.log(res);
-	// });
 	return await fetch(`${API}/signup`, {
 		method: "POST",
 		headers: {
@@ -53,32 +49,24 @@ async function register(config) {
 		.then((res) => res.json())
 		.then(
 			(result) => {
-				console.log(result.status);
-				if (result.code >= 400) {
+				if (result.status >= 400) {
 					return result.message;
 				}
 				return;
 			},
 			(error) => {
-				console.log(`e`);
-				console.log(error);
 				return "Erro! Favor contactar a equipe de suporte";
 			}
 		);
 }
 
-// function validadeToken(token) {}
-
-const getCurrentUser = () => {
-	return JSON.parse(localStorage.getItem("user"));
-};
+async function getCurrentUser() {
+	const user = localStorage.getItem("user");
+	return await Axios.post(`${API}/validateToken`, JSON.parse(user));
+}
 
 function userInfo() {
-	const userId = localStorage.getItem("userId");
-	const username = localStorage.getItem("username");
-	const token = localStorage.getItem("token");
-
-	return { userId, username, token };
+	return JSON.parse(localStorage.getItem("user"));
 }
 
 export default { login, userInfo, logout, register, getCurrentUser };
