@@ -34,45 +34,47 @@ export default (props) => {
 	const [user, setUser] = useState();
 
 	useEffect(() => {
-		let currentUser = AuthService.getCurrentUser();
-		if (currentUser) {
-			setUser({
-				userId: currentUser.id,
-				token: currentUser.token,
-			});
-		}
-		setIsLoaded(true);
+		(async () => {
+			let currentUser = await AuthService.getCurrentUser();
+			if (currentUser) {
+				setUser({
+					userId: currentUser.id,
+					token: currentUser.token,
+				});
+				setIsLoaded(true);
+			}
+		})();
 		return () => {};
 	}, []);
 
-	if (params.id) {
-		useEffect(() => {
-			let currentUser = AuthService.getCurrentUser();
-			const setDefaultsValues = () => {
-				fetch(`${API}/place/${params.id}`, {
-					method: "GET",
-					headers: {
-						"Content-type": "application/json;charset=UTF-8",
-						authorization: `bearer ${currentUser.token}`,
-						mode: "cors",
-					},
-				})
-					.then((res) => res.json())
-					.then(
-						(result) => {
-							setIsLoaded(true);
-							setObjCadastro({ ...result });
-						},
-						(error) => {
-							setIsLoaded(true);
-							setError(error);
-						}
-					);
-			};
-			setDefaultsValues();
-			return () => {};
-		}, [params.id]);
-	}
+	// if (params.id) {
+	// 	useEffect(() => {
+	// 		let currentUser = AuthService.getCurrentUser();
+	// 		const setDefaultsValues = () => {
+	// 			fetch(`${API}/place/${params.id}`, {
+	// 				method: "GET",
+	// 				headers: {
+	// 					"Content-type": "application/json;charset=UTF-8",
+	// 					authorization: `bearer ${currentUser.token}`,
+	// 					mode: "cors",
+	// 				},
+	// 			})
+	// 				.then((res) => res.json())
+	// 				.then(
+	// 					(result) => {
+	// 						setIsLoaded(true);
+	// 						setObjCadastro({ ...result });
+	// 					},
+	// 					(error) => {
+	// 						setIsLoaded(true);
+	// 						setError(error);
+	// 					}
+	// 				);
+	// 		};
+	// 		setDefaultsValues();
+	// 		return () => {};
+	// 	}, [params.id]);
+	// }
 
 	const handleCheckboxChange = useCallback(
 		(e, index) => {
@@ -110,37 +112,9 @@ export default (props) => {
 
 		form["author"] = user.userId;
 
+		console.log(JSON.stringify(form));
+
 		setObjCadastro(form);
-
-		fetch(`${API}/place${params.id ? "/" + params.id : ""}`, {
-			method: params.id ? "PUT" : "POST",
-			headers: {
-				"Content-type": "application/json;charset=UTF-8",
-				authorization: `bearer ${user.token}`,
-				// mode: "cors",
-			},
-			body: JSON.stringify(form),
-		})
-			.then((res) => res.json())
-			.then((res) => {
-				let message = {
-					class: "alert-danger error show",
-					msg: res.message,
-				};
-
-				if (res.code === 200) {
-					message["class"] = "alert-success success show";
-				}
-
-				setMessage(message);
-
-				setTimeout(() => {
-					setMessage({
-						class: "hide",
-						msg: "",
-					});
-				}, 2000);
-			});
 	};
 
 	const handleInputChange = (e) => {
