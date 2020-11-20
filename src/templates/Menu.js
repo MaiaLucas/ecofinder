@@ -6,11 +6,10 @@ import Search from "../components/Search";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import { Button, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import clsx from "clsx";
-import { Add } from "@material-ui/icons";
-import authService from "../services/auth.service";
+import AuthService from "../services/auth.service";
 import RegisterButton from "./RegisterButton";
 
 const useStyles = makeStyles((theme) => ({
@@ -62,10 +61,11 @@ export default function Menu() {
 	const classes = useStyles();
 	const [hasUser, setHasUser] = useState(false);
 	useEffect(() => {
-		let currentUser = authService.getCurrentUser();
-		if (currentUser) {
-			setHasUser(true);
-		}
+		(async () => {
+			await AuthService.getCurrentUser().then((req, res) => {
+				setHasUser(req.data);
+			});
+		})();
 		return () => {};
 	}, []);
 
