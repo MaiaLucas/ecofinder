@@ -10,6 +10,7 @@ import RegisterPlace from "./components/RegisterPlace";
 import PlaceDetail from "./templates/PlaceDetail";
 import Login from "./templates/Login";
 import Register from "./templates/Register";
+import CreatePlace from "./components/place/CreatePlace";
 
 function App() {
 	return (
@@ -19,11 +20,12 @@ function App() {
 				<Route path="/" exact component={Menu} />
 				<Route path="/login" component={Login} />
 				<Route path="/register" component={Register} />
-				<Route path="/place" exact component={RegisterPlace} />
+				<Route path="/place" exact component={CreatePlace} />
+				{/* <Route path="/place" exact component={RegisterPlace} /> */}
 				<Route path="/place/:id" exact component={RegisterPlace} />
 				<Route path={"/places"} component={Local} />
 				<Route path={"/detail/:id"} component={PlaceDetail} />
-				<Footer />
+				{/* <Footer /> */}
 			</Router>
 		</>
 	);
