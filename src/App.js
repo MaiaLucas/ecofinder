@@ -12,22 +12,21 @@ import Login from "./templates/Login";
 import Register from "./templates/Register";
 
 function App() {
-  return (
-    <>
-      <Router>
-        <Header />
-        <Route path="/" exact component={Menu} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <Route path="/place" exact component={RegisterPlace} />
-        <Route path="/place/:id" exact component={RegisterPlace} />
-        {/* <Route path={"/place/:id?/:place?"} component={Local} /> */}
-        <Route path={"/places"} component={Local} />
-        <Route path={"/detail/:id"} component={PlaceDetail} />
-        <Footer />
-      </Router>
-    </>
-  );
+	return (
+		<>
+			<Router>
+				<Header />
+				<Route path="/" exact component={Menu} />
+				<Route path="/login" component={Login} />
+				<Route path="/register" component={Register} />
+				<Route path="/place" exact component={RegisterPlace} />
+				<Route path="/place/:id" exact component={RegisterPlace} />
+				<Route path={"/places"} component={Local} />
+				<Route path={"/detail/:id"} component={PlaceDetail} />
+				<Footer />
+			</Router>
+		</>
+	);
 }
 
 export default App;
