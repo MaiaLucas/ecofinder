@@ -50,6 +50,9 @@ const useStyles = makeStyles((theme) => ({
 	search: {
 		display: "flex",
 		justifyContent: "center",
+		alignItems: "center",
+		position: "absolute",
+		top: "55%",
 	},
 }));
 
