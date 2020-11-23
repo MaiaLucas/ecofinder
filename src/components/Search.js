@@ -18,6 +18,7 @@ import clsx from "clsx";
 import { ArrowDropDownOutlined } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import API from "../API";
+import Axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
 	margin: {
@@ -26,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 	search: {
 		display: "flex",
 		width: "100%",
-		// alignItems: "center",
 		borderRadius: "50px",
 		position: "relative",
 	},
@@ -61,17 +61,21 @@ const useStyles = makeStyles((theme) => ({
 			background: "#79FD86",
 		},
 	},
+	searchOption: {
+		width: "100%",
+	},
 	list: {
 		width: "87%",
 		backgroundColor: theme.palette.background.paper,
 		color: "#222",
 		borderRadius: "20px",
 		marginTop: "10px",
+		maxHeight: "400px",
 	},
 }));
 
 export default (props) => {
-	const history = useHistory();
+	const { push } = useHistory();
 	const classes = useStyles();
 	const categories = ["Categorias", "E-Coleta", "Experiências", "Lojas"];
 
@@ -82,80 +86,47 @@ export default (props) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [dense, setDense] = React.useState(false);
 
-	const [display, setDisplay] = useState(false);
 	const [options, setOptions] = useState([]);
-	const [search, setSearch] = useState("");
+	const [searchValue, setSearchValue] = useState("");
 	const isMenuOpen = Boolean(anchorEl);
 	const inputRef = useRef("");
 
-	const changePlace = (e) => {
-		const { value } = e.target;
-		setType(value);
-		if (value > 0) {
-			setTarget(`/place/${value}/list/${place}`);
-		} else {
-			setTarget(`/place/list/${place}`);
-		}
+	const searchPlace = (value = "") => {
+		push("/places", {
+			type: 0,
+			place: typeof value === "string" ? value.toLowerCase() : searchValue,
+		});
 	};
 
-	const keyUpHandler = (e) => {
-		const { value } = e.target;
-
-		if (type !== 0) setTarget(`/place/${type}/list/${value}`);
-		else if (value.trim().length === 0) setTarget(`/place`);
-		else setTarget(`/place/list/${value}`);
-
-		setPlace(value);
-	};
-
-	const handleMenuClose = () => {
-		setAnchorEl(null);
-	};
-
-	const handleProfileMenuOpen = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
-
-	const renderMenu = (
-		<Menu
-			id="select-type"
-			value={type}
-			anchorEl={anchorEl}
-			anchorOrigin={{ vertical: "top", horizontal: "right" }}
-			keepMounted
-			transformOrigin={{ vertical: "top", horizontal: "right" }}
-			open={isMenuOpen}
-			onClose={handleMenuClose}
-			onChange={changePlace}
-		>
-			<MenuItem value={0} onClick={changePlace}>
-				Categorias
-			</MenuItem>
-			<MenuItem value={1} onClick={changePlace}>
-				E-Coleta
-			</MenuItem>
-			<MenuItem value={2} onClick={changePlace}>
-				Experiências
-			</MenuItem>
-			<MenuItem value={3} onClick={changePlace}>
-				Lojas
-			</MenuItem>
-		</Menu>
-	);
-
-	function generate(element) {
-		return [0, 1, 2].map((value) =>
-			React.cloneElement(element, {
-				key: value,
-			})
-		);
+	function generate() {
+		return options.map((value) => (
+			<ListItem>
+				<Button
+					color="inherit"
+					size="large"
+					className={classes.searchOption}
+					onClick={(e) => searchPlace(value)}
+				>
+					<ListItemText primary={value} />
+				</Button>
+			</ListItem>
+		));
 	}
 
 	function handleSearch(e) {
 		const { value } = e.target;
-		fetch(`${API}/city/${value}`).then((res) => {
-			console.log(res);
-		});
+		if (value.length) {
+			setSearchValue(value);
+			Axios.get(`${API}/city/${value}`)
+				.then((req) => {
+					setOptions(req.data);
+					setVisible(true);
+				})
+				.catch((err) => {
+					setVisible(false);
+					setOptions([]);
+				});
+		}
 	}
 
 	return (
@@ -167,66 +138,20 @@ export default (props) => {
 					placeholder="O que você busca?"
 					onKeyUp={handleSearch}
 				/>
-				<Button color="inherit" size="large" className={classes.searchButton}>
+				<Button
+					color="inherit"
+					size="large"
+					className={classes.searchButton}
+					onClick={searchPlace}
+				>
 					<SearchIcon />
 				</Button>
 			</div>
-			<div className={classes.list}>
-				<List dense={dense}>
-					{generate(
-						<ListItem>
-							<ListItemText primary="Single-line item" />
-						</ListItem>
-					)}
-				</List>
-			</div>
+			{visible && (
+				<div className={classes.list}>
+					<List dense={dense}>{generate()}</List>
+				</div>
+			)}
 		</Box>
 	);
 };
-
-// return (
-//   <Grid container className={clsx("Search")}>
-//     {/* <Grid item xs={3}>
-//       <IconButton
-//         edge="end"
-//         className={clsx(classes.category, "btn-category")}
-//         aria-controls={"select-type"}
-//         aria-haspopup="true"
-//         onClick={handleProfileMenuOpen}
-//         color="inherit"
-//       >
-//         {categories[type]}
-//         <ArrowDropDownOutlined fontSize="large" />
-//       </IconButton>
-//     </Grid> */}
-//     <Grid item xs={9} className={clsx(classes.search)}>
-//       <InputBase
-//         className={clsx("search")}
-//         id="input-with-icon-adornment"
-//         // onKeyUp={keyUpHandler}
-//         onClick={() => setVisible(false)}
-//         ref={inputRef}
-//       />
-//       <IconButton
-//         className={clsx("btn-search", classes.btnSearch)}
-//         position="end"
-//         to={target}
-//         onClick={(event) => {
-//           event.preventDefault();
-//           event.stopPropagation();
-//           // if (target !== "/place") history.push(`${target}`);
-//           if (target !== "/place")
-//             history.push("/places", { type: type, place: place });
-//           else {
-//             setVisible(true);
-//             inputRef.current.focus();
-//           }
-//         }}
-//       >
-//         <SearchIcon />
-//         {visible ? "Search" : ""}
-//       </IconButton>
-//     </Grid>
-//     {renderMenu}
-//   </Grid>
-// );
