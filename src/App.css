@@ -93,6 +93,20 @@ a {
 	min-height: calc(100vh - 6.1rem);
 }
 
+.menu-nav-tab {
+	display: flex;
+	justify-content: center;
+
+	color: #f9f9f9 !important;
+	padding: 8px;
+	font-size: 20px;
+}
+
+.menu-nav-tab:hover {
+	border-bottom: #40916c solid 2px;
+	color: #40916d;
+}
+
 .principal {
 	background-image: url("./assets/img/sustentability-bg.jpg");
 	min-height: 100vh;
