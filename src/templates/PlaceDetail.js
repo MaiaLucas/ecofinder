@@ -44,13 +44,6 @@ const tutorialSteps = [
 ];
 
 const useStyles = makeStyles((theme) => ({
-	// root: {
-	// 	display: "flex",
-	// 	flexWrap: "wrap",
-	// 	justifyContent: "space-around",
-	// 	overflow: "hidden",
-	// 	backgroundColor: theme.palette.background.paper,
-	// },
 	paper: {
 		padding: theme.spacing(2),
 		textAlign: "center",
@@ -98,21 +91,26 @@ export default () => {
 				.then((res) => res.json())
 				.then(
 					(result) => {
-						setObjPlace(result);
+						if (result.images_url) {
+							const auxImages = result.images_url
+								.split(",")
+								.map((image, index) => {
+									return {
+										label: Math.floor(Math.random() * 99999),
+										imgPath: image,
+									};
+								});
+							setArrImages(result.images_url ? auxImages : tutorialSteps);
+						}
+						setIsLoaded(true);
 					},
-					(error) => {}
+					(error) => {
+						setIsLoaded(false);
+					}
 				);
-
-			setArrImages(
-				objPlace && objPlace.images_url
-					? objPlace.images_url.split(",")
-					: tutorialSteps
-			);
-			setIsLoaded(true);
 		})();
 		return () => {};
 	}, []);
-
 
 	if (isLoaded) {
 		return (
@@ -129,7 +127,7 @@ export default () => {
 							{arrImages.map((image, index) => {
 								return (
 									<button
-										key={image.imgPath}
+										key={index}
 										className={activeStep === index ? "active" : ""}
 										type="button"
 										onClick={() => {
