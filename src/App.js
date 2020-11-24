@@ -11,6 +11,7 @@ import PlaceDetail from "./templates/PlaceDetail";
 import Login from "./templates/Login";
 import Register from "./templates/Register";
 import CreatePlace from "./components/place/CreatePlace";
+import EditPlace from "./components/place/EditPlace";
 
 function App() {
 	return (
@@ -22,7 +23,8 @@ function App() {
 				<Route path="/register" component={Register} />
 				<Route path="/place" exact component={CreatePlace} />
 				{/* <Route path="/place" exact component={RegisterPlace} /> */}
-				<Route path="/place/:id" exact component={RegisterPlace} />
+				{/* <Route path="/place/:id" exact component={RegisterPlace} /> */}
+				<Route path="/place/:id" exact component={EditPlace} />
 				<Route path={"/places"} component={Local} />
 				<Route path={"/detail/:id"} component={PlaceDetail} />
 				{/* <Footer /> */}
