@@ -4,16 +4,16 @@ import API from "../API";
 let TYPES = [];
 
 fetch(API + "/type")
-  .then((res) => res.json())
-  .then(
-    (result) => {
-      result.forEach((type) => {
-        TYPES.push(type.name);
-      });
-    },
-    (error) => {
-      return error;
-    }
-  );
+	.then((res) => res.json())
+	.then(
+		(result) => {
+			result.forEach((type) => {
+				TYPES.push(type.name);
+			});
+		},
+		(error) => {
+			return error;
+		}
+	);
 
 export default TYPES;

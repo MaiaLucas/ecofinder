@@ -1,0 +1,286 @@
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+// import { FiPlus } from "react-icons/fi";
+import "../../styles/pages/create-place.css";
+import authService from "../../services/auth.service";
+import Axios from "axios";
+import API from "../../API";
+import Alert from "@material-ui/lab/Alert";
+import Sidebar from "../../templates/SideBar";
+
+export default () => {
+	const { push, goBack } = useHistory();
+
+	const [name, setName] = useState("");
+	const [user, setUser] = useState("");
+	const [about, setAbout] = useState("");
+	const [hr_init, setHrInit] = useState("");
+	const [hr_final, setHrFinal] = useState("");
+	const [state, setState] = useState("");
+	const [city, setCity] = useState("");
+	const [address, setAddress] = useState("");
+	const [phone, setPhone] = useState("");
+	const [category, setCategory] = useState("");
+	const [successMessage, setSuccessMessage] = useState("");
+	const [isCreatedClass, setIsCreatedClass] = useState("error");
+	const [alertVisible, setAlertVisible] = useState("error");
+	const [open_on_weekends, setOpenOnWeekends] = useState(true);
+	// const [images, setImages] = useState([]);
+	// const [previewImages, setPreviewImages] = useState([]);
+
+	useEffect(() => {
+		(async () => {
+			await authService.getCurrentUser().then((req, res) => {
+				if (req.data) {
+					const { token, id } = authService.userInfo();
+					setUser({
+						id,
+						token,
+					});
+				}
+			});
+		})();
+		return () => {};
+	}, []);
+
+	async function handleSubmit(event) {
+		event.preventDefault();
+
+		let opening_days = "De Seg a Sex";
+		if (open_on_weekends) {
+			opening_days = "Todos os dias";
+		}
+
+		const data = {
+			title: name,
+			author: user.id,
+			description: about,
+			phone: phone,
+			city: city,
+			state: state,
+			address: address,
+			type: category,
+			hr_init: hr_init,
+			hr_final: hr_final,
+			opening_days: opening_days,
+		};
+
+		// images.forEach((image) => {
+		// 	data.append("images", image);
+		// });
+
+		console.log(data);
+
+		await Axios.post(`${API}/place`, data, {
+			headers: {
+				"Content-type": "application/json;charset=UTF-8",
+				authorization: `bearer ${user.token}`,
+			},
+		})
+			.then((req, res) => {
+				const { status, data } = req;
+				const { message } = data;
+				console.log(req);
+				if (status === 200) {
+					setSuccessMessage(message);
+					setIsCreatedClass("success");
+					setAlertVisible("visible");
+				} else {
+					setIsCreatedClass("error");
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+
+		// alert("Cadastro realizado com sucesso!");
+		// history.push("/");
+	}
+
+	// function handleSelectImages(event) {
+	// 	if (!event.target.files) return;
+
+	// 	const selectedImages = Array.from(event.target.files);
+
+	// 	setImages(selectedImages);
+
+	// 	const selectedImagesPreview = selectedImages.map((image) => {
+	// 		return URL.createObjectURL(image);
+	// 	});
+
+	// 	setPreviewImages(selectedImagesPreview);
+	// }
+
+	return (
+		<div id="page-create-place">
+			<Sidebar />
+			<main>
+				<h1>Cadastro de Local</h1>
+				<div className={`message ${alertVisible}`}>
+					<Alert
+						variant="filled"
+						severity={isCreatedClass}
+						onClose={() => {
+							setAlertVisible("");
+						}}
+					>
+						{successMessage}
+					</Alert>
+				</div>
+				<form onSubmit={handleSubmit} className="create-place-form">
+					<fieldset className="d-flex flex-wrap">
+						<legend>Dados</legend>
+
+						<div className="input-block col-sm-6">
+							<label htmlFor="name">Nome</label>
+							<input
+								required
+								id="name"
+								value={name}
+								onChange={(e) => setName(e.target.value)}
+							/>
+						</div>
+
+						<div className="input-block col-sm-6">
+							<label htmlFor="category">Categoria</label>
+							<select
+								id="category"
+								value={category}
+								onChange={(e) => setCategory(e.target.value)}
+							>
+								<option value="" disabled>
+									Categoria
+								</option>
+								<option value="1">Ponto de Coleta</option>
+								<option value="2">Experiência</option>
+								<option value="3">Loja</option>
+							</select>
+						</div>
+
+						<div className="input-block col-sm-12">
+							<label htmlFor="about">
+								Sobre <span>Máximo de 300 caracteres</span>
+							</label>
+							<textarea
+								id="name"
+								maxLength={300}
+								value={about}
+								onChange={(e) => setAbout(e.target.value)}
+							/>
+						</div>
+
+						{/* <div className="input-block">
+							<label htmlFor="images">Fotos</label>
+
+							<div className="images-container">
+								{previewImages.map((image) => {
+									return <img key={image} src={image} alt={name} />;
+								})}
+								<label htmlFor="image[]" className="new-image">
+									<FiPlus size={24} color="#15b6d6" />
+								</label>
+							</div>
+              <input
+              required
+								multiple
+								onChange={handleSelectImages}
+								type="file"
+								id="image[]"
+							/>
+						</div> */}
+					</fieldset>
+
+					<fieldset className="d-flex flex-wrap">
+						<legend>Localização</legend>
+						<div className="input-block col-sm-3">
+							<label htmlFor="state">Estado</label>
+							<input
+								required
+								id="state"
+								value={state}
+								onChange={(e) => setState(e.target.value)}
+							/>
+						</div>
+
+						<div className="input-block col-sm-3">
+							<label htmlFor="city">Cidade</label>
+							<input
+								required
+								id="city"
+								value={city}
+								onChange={(e) => setCity(e.target.value)}
+							/>
+						</div>
+
+						<div className="input-block col-sm-6">
+							<label htmlFor="address">Endereço</label>
+							<input
+								required
+								id="address"
+								value={address}
+								onChange={(e) => setAddress(e.target.value)}
+							/>
+						</div>
+					</fieldset>
+
+					<fieldset className="d-flex flex-wrap">
+						<legend>Informações Adicionais</legend>
+						<div className="input-block col-sm-6">
+							<label htmlFor="hr_final">Horário de funcionamento</label>
+							<div className="button-select row">
+								<input
+									type="time"
+									id="hr_init"
+									value={hr_init}
+									onChange={(e) => setHrInit(e.target.value)}
+								/>
+								<input
+									id="hr_final"
+									type="time"
+									value={hr_final}
+									onChange={(e) => setHrFinal(e.target.value)}
+								/>
+							</div>
+						</div>
+
+						<div className="input-block col-sm-6">
+							<label htmlFor="open_on_weekends">Atende fim de semana</label>
+
+							<div className="button-select">
+								<button
+									type="button"
+									className={open_on_weekends ? "active" : ""}
+									onClick={() => setOpenOnWeekends(true)}
+								>
+									Sim
+								</button>
+								<button
+									type="button"
+									className={!open_on_weekends ? "active" : ""}
+									onClick={() => setOpenOnWeekends(false)}
+								>
+									Não
+								</button>
+							</div>
+						</div>
+
+						<div className="input-block">
+							<label htmlFor="phone">Telefone para contato</label>
+							<input
+								required
+								id="phone"
+								value={phone}
+								onChange={(e) => setPhone(e.target.value)}
+							/>
+						</div>
+					</fieldset>
+
+					<button className="confirm-button" type="submit">
+						Confirmar
+					</button>
+				</form>
+			</main>
+		</div>
+	);
+};
