@@ -91,6 +91,7 @@ export default () => {
 				.then((res) => res.json())
 				.then(
 					(result) => {
+						setObjPlace(result);
 						if (result.images_url) {
 							const auxImages = result.images_url
 								.split(",")
