@@ -8,6 +8,7 @@ import Axios from "axios";
 import API from "../../API";
 import Alert from "@material-ui/lab/Alert";
 import Sidebar from "../../templates/SideBar";
+import { FiPlus } from "react-icons/fi";
 
 export default () => {
 	const { id } = useParams();
@@ -25,8 +26,8 @@ export default () => {
 	const [isCreatedClass, setIsCreatedClass] = useState("error");
 	const [alertVisible, setAlertVisible] = useState("error");
 	const [open_on_weekends, setOpenOnWeekends] = useState(true);
-	// const [images, setImages] = useState([]);
-	// const [previewImages, setPreviewImages] = useState([]);
+	const [images, setImages] = useState([]);
+	const [previewImages, setPreviewImages] = useState([]);
 
 	useEffect(() => {
 		(async () => {
@@ -57,6 +58,7 @@ export default () => {
 				setHrInit(place.hr_init);
 				setHrFinal(place.hr_final);
 				setOpenOnWeekends(place.opening_days !== "De Seg a Sex");
+				setPreviewImages(place.images_url ? place.images_url.split(",") : []);
 			});
 		})();
 		return () => {};
@@ -70,23 +72,37 @@ export default () => {
 			opening_days = "Todos os dias";
 		}
 
-		const data = {
-			title: name,
-			author: user.id,
-			description: about,
-			phone: phone,
-			city: city,
-			state: state,
-			address: address,
-			type: category,
-			hr_init: hr_init,
-			hr_final: hr_final,
-			opening_days: opening_days,
-		};
+		// const data = {
+		// 	title: name,
+		// 	author: user.id,
+		// 	description: about,
+		// 	phone: phone,
+		// 	city: city,
+		// 	state: state,
+		// 	address: address,
+		// 	type: category,
+		// 	hr_init: hr_init,
+		// 	hr_final: hr_final,
+		// 	opening_days: opening_days,
+		// };
+		let data = new FormData();
+		data.append("title", name);
+		data.append("author", user.id);
+		data.append("description", about);
+		data.append("phone", phone);
+		data.append("city", city);
+		data.append("state", state);
+		data.append("address", address);
+		data.append("type", category);
+		data.append("hr_init", hr_init);
+		data.append("hr_final", hr_final);
+		data.append("opening_days", opening_days);
 
-		// images.forEach((image) => {
-		// 	data.append("images", image);
-		// });
+		if (images.length) {
+			images.forEach((image) => {
+				data.append("images", image);
+			});
+		}
 
 		await Axios.put(`${API}/place/${id}`, data, {
 			headers: {
@@ -105,25 +121,24 @@ export default () => {
 					setIsCreatedClass("error");
 				}
 			})
-			.catch((err) => {});
-
-		// alert("Cadastro realizado com sucesso!");
-		// history.push("/");
+			.catch((err) => {
+				console.log(err);
+			});
 	}
 
-	// function handleSelectImages(event) {
-	// 	if (!event.target.files) return;
+	function handleSelectImages(event) {
+		if (!event.target.files) return;
 
-	// 	const selectedImages = Array.from(event.target.files);
+		const selectedImages = Array.from(event.target.files);
 
-	// 	setImages(selectedImages);
+		setImages(selectedImages);
 
-	// 	const selectedImagesPreview = selectedImages.map((image) => {
-	// 		return URL.createObjectURL(image);
-	// 	});
+		const selectedImagesPreview = selectedImages.map((image) => {
+			return URL.createObjectURL(image);
+		});
 
-	// 	setPreviewImages(selectedImagesPreview);
-	// }
+		setPreviewImages(selectedImagesPreview);
+	}
 
 	return (
 		<div id="page-create-place">
@@ -141,21 +156,22 @@ export default () => {
 						{successMessage}
 					</Alert>
 				</div>
-				<form onSubmit={handleSubmit} className="create-place-form">
+				<form onSubmit={handleSubmit} className="create-place-form" noValidate>
 					<fieldset className="d-flex flex-wrap">
 						<legend>Dados</legend>
 
-						<div className="input-block col-sm-6">
+						<div className="input-block col-sm-8">
 							<label htmlFor="name">Nome</label>
 							<input
 								required
 								id="name"
+								placeholder="Digite aqui o nome do local ou experiência"
 								value={name}
 								onChange={(e) => setName(e.target.value)}
 							/>
 						</div>
 
-						<div className="input-block col-sm-6">
+						<div className="input-block col-sm-4">
 							<label htmlFor="category">Categoria</label>
 							<select
 								id="category"
@@ -178,12 +194,13 @@ export default () => {
 							<textarea
 								id="name"
 								maxLength={300}
+								placeholder="Digite aqui uma breve descrição"
 								value={about}
 								onChange={(e) => setAbout(e.target.value)}
 							/>
 						</div>
 
-						{/* <div className="input-block">
+						<div className="input-block">
 							<label htmlFor="images">Fotos</label>
 
 							<div className="images-container">
@@ -194,14 +211,14 @@ export default () => {
 									<FiPlus size={24} color="#15b6d6" />
 								</label>
 							</div>
-              <input
-              required
+							<input
+								required
 								multiple
 								onChange={handleSelectImages}
 								type="file"
 								id="image[]"
 							/>
-						</div> */}
+						</div>
 					</fieldset>
 
 					<fieldset className="d-flex flex-wrap">
@@ -211,6 +228,7 @@ export default () => {
 							<input
 								required
 								id="state"
+								placeholder="Ex: Ceará"
 								value={state}
 								onChange={(e) => setState(e.target.value)}
 							/>
@@ -221,6 +239,7 @@ export default () => {
 							<input
 								required
 								id="city"
+								placeholder="Ex: Fortaleza"
 								value={city}
 								onChange={(e) => setCity(e.target.value)}
 							/>
@@ -231,6 +250,7 @@ export default () => {
 							<input
 								required
 								id="address"
+								placeholder="Ex: Rua dos Bobos, 0 - Bairro"
 								value={address}
 								onChange={(e) => setAddress(e.target.value)}
 							/>
@@ -283,6 +303,7 @@ export default () => {
 							<input
 								required
 								id="phone"
+								placeholder="Ex: (85) 9 9999-9999"
 								value={phone}
 								onChange={(e) => setPhone(e.target.value)}
 							/>
