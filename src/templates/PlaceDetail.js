@@ -88,9 +88,12 @@ export default () => {
 
 	useEffect(() => {
 		(async () => {
-			let currentUser = await AuthService.getCurrentUser();
-			console.log("menu -> ", currentUser);
-			currentUser && setUser(currentUser.id);
+			await AuthService.getCurrentUser().then((req, res) => {
+				if (req.data) {
+					const { id } = AuthService.userInfo();
+					setUser(id);
+				}
+			});
 			fetch(`${API}/place/${id}`)
 				.then((res) => res.json())
 				.then(
@@ -142,7 +145,7 @@ export default () => {
 						<Grid item xs={10} className="place-details-content">
 							<h1>
 								{objPlace.title}
-								{objPlace.author == user ? (
+								{objPlace.author === user ? (
 									<Link className={classes.edit} to={"/place/" + id}>
 										<FiEdit size={32} color="#15B6D6" />
 									</Link>
