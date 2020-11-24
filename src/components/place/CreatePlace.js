@@ -8,6 +8,7 @@ import Axios from "axios";
 import API from "../../API";
 import Alert from "@material-ui/lab/Alert";
 import Sidebar from "../../templates/SideBar";
+import { FiPlus } from "react-icons/fi";
 
 export default () => {
 	const { push, goBack } = useHistory();
@@ -26,8 +27,8 @@ export default () => {
 	const [isCreatedClass, setIsCreatedClass] = useState("error");
 	const [alertVisible, setAlertVisible] = useState("error");
 	const [open_on_weekends, setOpenOnWeekends] = useState(true);
-	// const [images, setImages] = useState([]);
-	// const [previewImages, setPreviewImages] = useState([]);
+	const [images, setImages] = useState([]);
+	const [previewImages, setPreviewImages] = useState([]);
 
 	useEffect(() => {
 		(async () => {
@@ -52,25 +53,36 @@ export default () => {
 			opening_days = "Todos os dias";
 		}
 
-		const data = {
-			title: name,
-			author: user.id,
-			description: about,
-			phone: phone,
-			city: city,
-			state: state,
-			address: address,
-			type: category,
-			hr_init: hr_init,
-			hr_final: hr_final,
-			opening_days: opening_days,
-		};
+		// const data = {
+		// 	title: name,
+		// 	author: user.id,
+		// 	description: about,
+		// 	phone: phone,
+		// 	city: city,
+		// 	state: state,
+		// 	address: address,
+		// 	type: category,
+		// 	hr_init: hr_init,
+		// 	hr_final: hr_final,
+		// 	opening_days: opening_days,
+		// 	images_url: [],
+		// };
+		let data = new FormData();
+		data.append("title", name);
+		data.append("author", user.id);
+		data.append("description", about);
+		data.append("phone", phone);
+		data.append("city", city);
+		data.append("state", state);
+		data.append("address", address);
+		data.append("type", category);
+		data.append("hr_init", hr_init);
+		data.append("hr_final", hr_final);
+		data.append("opening_days", opening_days);
 
-		// images.forEach((image) => {
-		// 	data.append("images", image);
-		// });
-
-		console.log(data);
+		images.forEach((image) => {
+			data.append("images", image);
+		});
 
 		await Axios.post(`${API}/place`, data, {
 			headers: {
@@ -98,19 +110,19 @@ export default () => {
 		// history.push("/");
 	}
 
-	// function handleSelectImages(event) {
-	// 	if (!event.target.files) return;
+	function handleSelectImages(event) {
+		if (!event.target.files) return;
 
-	// 	const selectedImages = Array.from(event.target.files);
+		const selectedImages = Array.from(event.target.files);
 
-	// 	setImages(selectedImages);
+		setImages(selectedImages);
 
-	// 	const selectedImagesPreview = selectedImages.map((image) => {
-	// 		return URL.createObjectURL(image);
-	// 	});
+		const selectedImagesPreview = selectedImages.map((image) => {
+			return URL.createObjectURL(image);
+		});
 
-	// 	setPreviewImages(selectedImagesPreview);
-	// }
+		setPreviewImages(selectedImagesPreview);
+	}
 
 	return (
 		<div id="page-create-place">
@@ -128,7 +140,7 @@ export default () => {
 						{successMessage}
 					</Alert>
 				</div>
-				<form onSubmit={handleSubmit} className="create-place-form">
+				<form onSubmit={handleSubmit} className="create-place-form" noValidate>
 					<fieldset className="d-flex flex-wrap">
 						<legend>Dados</legend>
 
@@ -170,7 +182,7 @@ export default () => {
 							/>
 						</div>
 
-						{/* <div className="input-block">
+						<div className="input-block">
 							<label htmlFor="images">Fotos</label>
 
 							<div className="images-container">
@@ -181,14 +193,14 @@ export default () => {
 									<FiPlus size={24} color="#15b6d6" />
 								</label>
 							</div>
-              <input
-              required
+							<input
+								required
 								multiple
 								onChange={handleSelectImages}
 								type="file"
 								id="image[]"
 							/>
-						</div> */}
+						</div>
 					</fieldset>
 
 					<fieldset className="d-flex flex-wrap">
