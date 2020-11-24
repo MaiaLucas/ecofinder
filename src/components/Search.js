@@ -135,7 +135,7 @@ export default (props) => {
 				<input
 					type="text"
 					className={classes.searchTerm}
-					placeholder="O que você busca?"
+					placeholder="Digite a cidade que deseja buscar..."
 					onKeyUp={handleSearch}
 				/>
 				<Button

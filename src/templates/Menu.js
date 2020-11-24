@@ -61,6 +61,17 @@ const useStyles = makeStyles((theme) => ({
 		background: "#40916d00",
 		width: "500px",
 	},
+	subheadline: {
+		position: "absolute",
+		top: "30%",
+		fontWeight: "bold",
+	},
+	headline: {
+		position: "absolute",
+		top: "35%",
+		fontWeight: "bold",
+		color: "green",
+	},
 }));
 
 export default function Menu() {
@@ -113,7 +124,12 @@ export default function Menu() {
 								</Grid>
 							</Grid>
 						</Paper>
-						<Typography variant={"h2"}>Bora lá</Typography>
+						<Typography variant={"h4"} className={classes.subheadline}>
+							Viva, Recicle, Compre
+						</Typography>
+						<Typography variant={"h1"} className={classes.headline}>
+							Seja Ecofriendly
+						</Typography>
 						<Grid container className={classes.search}>
 							<Grid item xs={4}>
 								<Search />
