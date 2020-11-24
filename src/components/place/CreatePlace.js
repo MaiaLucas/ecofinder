@@ -93,7 +93,6 @@ export default () => {
 			.then((req, res) => {
 				const { status, data } = req;
 				const { message } = data;
-				console.log(req);
 				if (status === 200) {
 					setSuccessMessage(message);
 					setIsCreatedClass("success");
@@ -144,17 +143,18 @@ export default () => {
 					<fieldset className="d-flex flex-wrap">
 						<legend>Dados</legend>
 
-						<div className="input-block col-sm-6">
+						<div className="input-block col-sm-8">
 							<label htmlFor="name">Nome</label>
 							<input
 								required
 								id="name"
+								placeholder="Digite aqui o nome do local ou experiência"
 								value={name}
 								onChange={(e) => setName(e.target.value)}
 							/>
 						</div>
 
-						<div className="input-block col-sm-6">
+						<div className="input-block col-sm-4">
 							<label htmlFor="category">Categoria</label>
 							<select
 								id="category"
@@ -177,6 +177,7 @@ export default () => {
 							<textarea
 								id="name"
 								maxLength={300}
+								placeholder="Digite aqui uma breve descrição"
 								value={about}
 								onChange={(e) => setAbout(e.target.value)}
 							/>
@@ -210,6 +211,7 @@ export default () => {
 							<input
 								required
 								id="state"
+								placeholder="Ex: Ceará"
 								value={state}
 								onChange={(e) => setState(e.target.value)}
 							/>
@@ -220,6 +222,7 @@ export default () => {
 							<input
 								required
 								id="city"
+								placeholder="Ex: Fortaleza"
 								value={city}
 								onChange={(e) => setCity(e.target.value)}
 							/>
@@ -230,6 +233,7 @@ export default () => {
 							<input
 								required
 								id="address"
+								placeholder="Ex: Rua dos Bobos, 0 - Bairro"
 								value={address}
 								onChange={(e) => setAddress(e.target.value)}
 							/>
@@ -282,6 +286,7 @@ export default () => {
 							<input
 								required
 								id="phone"
+								placeholder="Ex: (85) 9 9999-9999"
 								value={phone}
 								onChange={(e) => setPhone(e.target.value)}
 							/>
