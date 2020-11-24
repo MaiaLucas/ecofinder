@@ -149,7 +149,7 @@ export default (props) => {
 		return <Loading />;
 	} else if (isLoaded) {
 		return (
-			<div id="page-loca-list">
+			<div id="page-local-list">
 				<Sidebar />
 				<main>
 					<Grid container className="local-list">
