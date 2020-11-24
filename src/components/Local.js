@@ -7,11 +7,13 @@ import { Grid, makeStyles, Paper, Typography } from "@material-ui/core";
 import amongNature from "../assets/img/places_highlights.jpg";
 import TYPES from "../constants/types";
 import GroupPlace from "../templates/GroupPlace";
+import Sidebar from "../templates/SideBar";
+import "../styles/pages/local-list.css";
 
 const useStyles = makeStyles((theme) => ({
-	root: {
-		flexGrow: 1,
-	},
+	// root: {
+	// 	flexGrow: 1,
+	// },
 	spacing: {
 		marginTop: "20ch",
 	},
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 		margin: theme.spacing(2),
 		textAlign: "center",
 		color: theme.palette.text.secondary,
-		height: "100ch",
+		// height: "100ch",
 	},
 	header: {
 		alignItems: "center",
@@ -42,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "center",
-		minHeight: "50ch",
 	},
 	typeTitle: {
 		width: "74vw",
@@ -148,44 +149,53 @@ export default (props) => {
 		return <Loading />;
 	} else if (isLoaded) {
 		return (
-			<div className={classes.root}>
-				<Grid container>
-					<Grid item xs={12}>
-						<Paper className={clsx("local-highlights", classes.highlights)}>
-							<Typography variant={"h1"}>{pageInfo[type].headline}</Typography>
-							<Typography variant={"h4"}>
-								{pageInfo[type].subheadline}
-							</Typography>
-						</Paper>
+			<div id="page-loca-list">
+				<Sidebar />
+				<main>
+					<Grid container className="local-list">
+						<Grid item xs={12}>
+							<Paper className={clsx("local-highlights", classes.highlights)}>
+								<Typography variant={"h1"}>
+									{pageInfo[type].headline}
+								</Typography>
+								<Typography variant={"h4"}>
+									{pageInfo[type].subheadline}
+								</Typography>
+							</Paper>
+						</Grid>
 					</Grid>
-				</Grid>
-				<Grid container className={classes.places}>
-					<Grid item xs={12}>
-						<Paper className={classes.placesGroup}>
-							{local && !type ? (
-								<>
-									{garbageCollect.length ? (
-										<GroupPlace title={TYPES[0]} arrPlaces={garbageCollect} />
-									) : (
-										""
-									)}
-									{experience.length ? (
-										<GroupPlace title={TYPES[1]} arrPlaces={experience} />
-									) : (
-										""
-									)}
-									{store.length ? (
-										<GroupPlace title={TYPES[2]} arrPlaces={store} />
-									) : (
-										""
-									)}
-								</>
-							) : (
-								<GroupPlace title="" arrPlaces={items} perPage={items.length} />
-							)}
-						</Paper>
+					<Grid container className={clsx(classes.places, "local-list")}>
+						<Grid item xs={12}>
+							<Paper className={classes.placesGroup}>
+								{local && !type ? (
+									<>
+										{garbageCollect.length ? (
+											<GroupPlace title={TYPES[0]} arrPlaces={garbageCollect} />
+										) : (
+											""
+										)}
+										{experience.length ? (
+											<GroupPlace title={TYPES[1]} arrPlaces={experience} />
+										) : (
+											""
+										)}
+										{store.length ? (
+											<GroupPlace title={TYPES[2]} arrPlaces={store} />
+										) : (
+											""
+										)}
+									</>
+								) : (
+									<GroupPlace
+										title=""
+										arrPlaces={items}
+										perPage={items.length}
+									/>
+								)}
+							</Paper>
+						</Grid>
 					</Grid>
-				</Grid>
+				</main>
 			</div>
 		);
 	} else {
