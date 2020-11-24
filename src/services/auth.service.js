@@ -58,12 +58,12 @@ async function register(config) {
 				return "Erro! Favor contactar a equipe de suporte";
 			}
 		);
-
 }
 
 async function getCurrentUser() {
 	const user = localStorage.getItem("user");
-	return await Axios.post(`${API}/validateToken`, JSON.parse(user));
+	if (user) return await Axios.post(`${API}/validateToken`, JSON.parse(user));
+	else return false;
 }
 
 function userInfo() {
