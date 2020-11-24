@@ -58,6 +58,7 @@ async function register(config) {
 				return "Erro! Favor contactar a equipe de suporte";
 			}
 		);
+
 }
 
 async function getCurrentUser() {

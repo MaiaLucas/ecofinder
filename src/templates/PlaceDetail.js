@@ -110,9 +110,9 @@ export default () => {
 			);
 			setIsLoaded(true);
 		})();
-
 		return () => {};
 	}, []);
+
 
 	if (isLoaded) {
 		return (
@@ -125,7 +125,6 @@ export default () => {
 							src={arrImages[activeStep].imgPath || amongNature}
 							alt=""
 						/>
-
 						<Grid item xs={6} className="images">
 							{arrImages.map((image, index) => {
 								return (
@@ -154,7 +153,6 @@ export default () => {
 								)}
 							</h1>
 							<p>{objPlace.description}</p>
-
 							<hr />
 							<h2>Endereço</h2>
 							<p>
