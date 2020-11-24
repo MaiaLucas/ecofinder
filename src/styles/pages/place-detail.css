@@ -13,7 +13,7 @@
 
 .place-details {
 	/* width: 700px; */
-	width: 80vw;
+	width: 80vw !important;
 
 	background: #ffffff;
 	border: 1px solid #d3e2e5;
