@@ -12,20 +12,27 @@ import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
+import logo from "../assets/logo.svg";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
 	},
 	appbar: {
-		background: "#f9f9f9ff",
-		color: "#44C969",
+		background: "#f9f9f900",
+		color: "#f9f9f9",
+		boxShadow: "0px 5px 5px 0px rgba(0, 0, 0, 0.01)",
 	},
 	menuButton: {
 		marginLeft: theme.spacing(2),
 	},
 	title: {
 		flexGrow: 1,
+		color: "#222",
+		"& img": {
+			width: "120px",
+			// fontSize: "20px",
+		},
 	},
 	paper: {
 		marginRight: theme.spacing(2),
@@ -97,12 +104,8 @@ export default (props) => {
 	return (
 		<AppBar position="fixed" className={classes.appbar}>
 			<Toolbar>
-				<Typography
-					variant="h6"
-					className={classes.title}
-					onClick={() => push("/")}
-				>
-					Ecofinder
+				<Typography variant="h6" className={classes.title}>
+					<img src={logo} alt="logo" onClick={() => push("/")} />
 				</Typography>
 				{!hasUser ? (
 					<Button color="inherit" onClick={(e) => login(e)}>

@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import throwAway from "../assets/img/throw_away.png";
-import onlineArticle from "../assets/img/online_article.png";
-import amongNature from "../assets/img/among_nature.png";
 import Search from "../components/Search";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -52,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: "center",
 		alignItems: "center",
 		position: "absolute",
-		top: "55%",
+		top: "50%",
 	},
 	navTabs: {
 		position: "absolute",
@@ -63,14 +60,17 @@ const useStyles = makeStyles((theme) => ({
 	},
 	subheadline: {
 		position: "absolute",
-		top: "30%",
+		top: "20rem",
+		// left: "20%",
 		fontWeight: "bold",
+		// background: "linear-gradient(116.8deg, #37C77F -41.65%, #00FF3A 99.75%);",
+		// backgroundClip: "text",
 	},
 	headline: {
 		position: "absolute",
-		top: "35%",
+		top: "30%",
 		fontWeight: "bold",
-		color: "green",
+		color: "#37C77F",
 	},
 }));
 
@@ -124,11 +124,17 @@ export default function Menu() {
 								</Grid>
 							</Grid>
 						</Paper>
-						<Typography variant={"h4"} className={classes.subheadline}>
-							Viva, Recicle, Compre
-						</Typography>
-						<Typography variant={"h1"} className={classes.headline}>
-							Seja Ecofriendly
+						{/* <Typography
+							variant={"h6"}
+							className={clsx(classes.subheadline, "subheadline")}
+						>
+							Venha experimentar novas <br /> experiências de forma sustentável
+						</Typography> */}
+						<Typography
+							variant={"h1"}
+							className={clsx(classes.headline, "headline")}
+						>
+							EcoFinder
 						</Typography>
 						<Grid container className={classes.search}>
 							<Grid item xs={4}>
