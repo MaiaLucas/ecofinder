@@ -66,7 +66,6 @@ body {
 }
 
 .Login:hover,
-.btn-search:hover,
 .btn-save:hover {
 	background: linear-gradient(
 		310deg,
@@ -97,9 +96,8 @@ a {
 	display: flex;
 	justify-content: center;
 
-	color: #f9f9f9 !important;
+	color: #222;
 	padding: 8px;
-	font-size: 20px;
 }
 
 .menu-nav-tab:hover {
@@ -108,17 +106,40 @@ a {
 }
 
 .principal {
+	content: "";
 	background-image: url("./assets/img/sustentability-bg.jpg");
+	background-color: #222;
+	background-size: cover;
 	min-height: 100vh;
 	padding: 0px !important;
 	background-repeat: no-repeat;
-	background-size: 100vw 100vh;
-	background-position: 100% center;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	color: #f9f9f9 !important;
+	color: #080808 !important;
+	font-family: "Poppins";
+}
+
+.principal .subheadline {
+	background: linear-gradient(116.8deg, #37c77f -41.65%, #00ff3a 99.75%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	-moz-text-fill-color: transparent;
+	-webkit-text-fill-color: transparent;
+	display: inline-block;
+	font-family: "Poppins";
+}
+.principal .headline {
+	background: linear-gradient(116.8deg, #28774f -41.65%, #10812b 99.75%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	-moz-text-fill-color: transparent;
+	-webkit-text-fill-color: transparent;
+	display: inline-block;
+	font-family: "Poppins";
 }
 
 .view-cards {
@@ -147,33 +168,6 @@ a {
 	background-color: var(--white);
 }
 
-.btn-search {
-	height: 3rem !important;
-	min-width: 3rem !important;
-	margin-right: 8px !important;
-	font-family: "Roboto";
-	font-size: 16px;
-	text-decoration: none !important;
-	background-color: var(--btn-primary) !important;
-	box-shadow: var(--shadow) !important;
-	color: var(--white) !important;
-	box-shadow: 0px 5px 5px 0px #40916c !important;
-}
-
-.btn-search.disabled-link {
-	background-color: var(--btn-hover);
-	box-shadow: 0px 5px 5px 0px var(--btn-hover);
-}
-
-.btn-search:hover {
-	background: linear-gradient(
-		310deg,
-		rgba(77, 182, 128, 1) 0%,
-		rgba(12, 171, 81, 1) 100%
-	) !important;
-	cursor: pointer;
-}
-
 .search {
 	background-color: var(--white);
 	height: 100%;
@@ -199,7 +193,6 @@ a {
 }
 
 .search:focus,
-.btn-search:focus,
 .btn-category:focus,
 .btn-save:focus {
 	border: none;

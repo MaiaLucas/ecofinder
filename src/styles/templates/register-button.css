@@ -1,7 +1,7 @@
-aside.app-sidebar {
+aside.app-new-content {
 	position: fixed;
 	height: 100%;
-	padding: 32px 24px;
+	padding: 32px 44px;
 	background-color: #44c96a00;
 
 	display: flex;
@@ -10,14 +10,9 @@ aside.app-sidebar {
 	align-items: center;
 }
 
-aside.app-sidebar img {
-	width: 48px;
-}
-
-aside.app-sidebar footer a,
-aside.app-sidebar footer button {
-	width: 48px;
-	height: 48px;
+.btn-new-content {
+	width: 58px;
+	height: 58px;
 
 	border: 0;
 
@@ -31,9 +26,11 @@ aside.app-sidebar footer button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: absolute;
+	right: 100px;
+	bottom: 100px;
 }
 
-aside.app-sidebar footer a:hover,
-aside.app-sidebar footer button:hover {
+.btn-new-content:hover {
 	background: linear-gradient(116.8deg, #37c77f -41.65%, #00ff3a 99.75%);
 }
