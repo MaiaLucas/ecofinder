@@ -91,7 +91,7 @@ export default (props) => {
 			<ListItem>
 				<Button
 					color="inherit"
-					size="large"
+					size="medium"
 					className={classes.searchOption}
 					onClick={(e) => searchPlace(value)}
 				>
@@ -128,7 +128,7 @@ export default (props) => {
 				/>
 				<IconButton
 					color="inherit"
-					size="large"
+					size="medium"
 					// className={classes.searchButton}
 					className={"btn-search"}
 					onClick={searchPlace}

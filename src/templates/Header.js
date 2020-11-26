@@ -115,16 +115,18 @@ export default (props) => {
 					<>
 						<IconButton
 							edge="start"
+							component="span"
 							className={classes.menuButton}
 							color="inherit"
 							aria-label="menu"
 							ref={anchorRef}
+							size="medium"
 							aria-controls={open ? "menu-list-grow" : undefined}
 							aria-haspopup="true"
 							onClick={handleToggle}
 						>
 							<div className={classes.user}>Olá, {user}</div>
-							<MenuIcon />
+							<MenuIcon size="medium" />
 						</IconButton>
 						<Popper
 							open={open}

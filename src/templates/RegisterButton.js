@@ -11,7 +11,7 @@ export default (params) => {
 			<IconButton
 				className={"btn-new-content"}
 				color="inherit"
-				size="large"
+				size="medium"
 				onClick={() => push("/place")}
 			>
 				<Add />
