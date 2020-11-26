@@ -3,11 +3,12 @@ import Search from "../components/Search";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import { Tab, Tabs, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import clsx from "clsx";
 import AuthService from "../services/auth.service";
 import RegisterButton from "./RegisterButton";
+import Footer from "./Footer";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -81,7 +82,6 @@ export default function Menu() {
 	};
 	const classes = useStyles();
 	const [hasUser, setHasUser] = useState(false);
-	const [type, setType] = useState(0);
 	useEffect(() => {
 		(async () => {
 			await AuthService.getCurrentUser().then((req, res) => {
@@ -124,16 +124,13 @@ export default function Menu() {
 								</Grid>
 							</Grid>
 						</Paper>
-						{/* <Typography
-							variant={"h6"}
-							className={clsx(classes.subheadline, "subheadline")}
-						>
-							Venha experimentar novas <br /> experiências de forma sustentável
-						</Typography> */}
 						<Typography
 							variant={"h1"}
 							className={clsx(classes.headline, "headline")}
 						>
+							<Typography variant={"h6"} className="subheadline">
+								Tudo que precisa para uma ida sustentável
+							</Typography>
 							EcoFinder
 						</Typography>
 						<Grid container className={classes.search}>
@@ -145,6 +142,7 @@ export default function Menu() {
 				</Grid>
 				{hasUser && <RegisterButton />}
 			</Grid>
+			<Footer />
 		</div>
 	);
 }
