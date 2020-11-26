@@ -7,8 +7,7 @@ import { IconButton } from "@material-ui/core";
 export default () => {
 	return (
 		<div className="app-footer">
-			<IconButton
-				component="a"
+			<a
 				target="_blank"
 				href="https://github.com/MaiaLucas/ecofinder"
 				rel="noopener noreferrer"
@@ -17,8 +16,8 @@ export default () => {
 				}}
 			>
 				<GitHubIcon />
-			</IconButton>
-			<IconButton
+			</a>
+			<a
 				component="a"
 				target="_blank"
 				href="https://www.linkedin.com/in/lucas-maia-12722a17b/"
@@ -28,7 +27,7 @@ export default () => {
 				}}
 			>
 				<LinkedInIcon onClick={() => console.log("git")} />
-			</IconButton>
+			</a>
 		</div>
 	);
 };
