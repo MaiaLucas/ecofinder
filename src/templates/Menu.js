@@ -70,6 +70,7 @@ const useStyles = makeStyles((theme) => ({
 	headline: {
 		position: "absolute",
 		top: "30%",
+		fontSize: "100px",
 		fontWeight: "bold",
 		color: "#37C77F",
 	},
@@ -128,9 +129,9 @@ export default function Menu() {
 							variant={"h1"}
 							className={clsx(classes.headline, "headline")}
 						>
-							<Typography variant={"h6"} className="subheadline">
+							<span className="subheadline">
 								Tudo que precisa para uma ida sustentável
-							</Typography>
+							</span>
 							EcoFinder
 						</Typography>
 						<Grid container className={classes.search}>
