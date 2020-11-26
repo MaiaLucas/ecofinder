@@ -1,19 +1,34 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import "../styles/templates/footer.css";
+import GitHubIcon from "@material-ui/icons/GitHub";
+import LinkedInIcon from "@material-ui/icons/LinkedIn";
+import { IconButton } from "@material-ui/core";
 
 export default () => {
-  return (
-    <div className="Footer d-flex justify-content-between p-2">
-      <div className="footer-message ml-4">
-        Por amor ao nosso planeta
-        <FontAwesomeIcon icon={faHeart} className="footer-icons fa-lg" />
-      </div>
-      <div className="external mr-4">
-        <FontAwesomeIcon icon={faGithub} className="footer-icons fa-2x mx-2" />
-        <FontAwesomeIcon icon={faTwitter} className="footer-icons fa-2x" />
-      </div>
-    </div>
-  );
+	return (
+		<div className="app-footer">
+			<IconButton
+				component="a"
+				target="_blank"
+				href="https://github.com/MaiaLucas/ecofinder"
+				rel="noopener noreferrer"
+				onClick={(e) => {
+					return true;
+				}}
+			>
+				<GitHubIcon />
+			</IconButton>
+			<IconButton
+				component="a"
+				target="_blank"
+				href="https://www.linkedin.com/in/lucas-maia-12722a17b/"
+				rel="noopener noreferrer"
+				onClick={(e) => {
+					return true;
+				}}
+			>
+				<LinkedInIcon onClick={() => console.log("git")} />
+			</IconButton>
+		</div>
+	);
 };
