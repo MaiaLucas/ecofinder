@@ -6,6 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import API from "../API";
 import Axios from "axios";
+import "../styles/templates/card-place.css";
 
 const useStyles = makeStyles((theme) => ({
 	header: {
@@ -49,12 +50,12 @@ export default (props) => {
 			to={{
 				pathname: "/detail/" + info.id,
 			}}
-			className="link-place-detail"
+			className="preview-place-detail"
 		>
-			<img className={classes.img} src={image} alt="" />
-			<Paper square elevation={0} className={classes.header}>
+			<img src={image} alt="" />
+			<div>
 				<Typography>{info.title}</Typography>
-			</Paper>
+			</div>
 		</Link>
 	);
 };

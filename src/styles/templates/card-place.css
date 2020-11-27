@@ -1,0 +1,29 @@
+.preview-place-detail {
+	background-color: black;
+	border-radius: 20px !important;
+	text-decoration: none;
+	width: 255px !important;
+	height: 255px;
+}
+
+.preview-place-detail img {
+	max-width: 255px !important;
+	height: 255px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+}
+
+.preview-place-detail div {
+	background-color: #f9f9f9;
+	color: #222;
+	padding-top: 14px;
+	padding-bottom: 14px;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+}
+
+@media (max-width: 800px) {
+	.preview-place-detail img {
+		max-width: 100%;
+	}
+}

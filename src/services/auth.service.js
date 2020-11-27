@@ -63,7 +63,10 @@ async function register(config) {
 async function getCurrentUser() {
 	const user = localStorage.getItem("user");
 	if (user) return await Axios.post(`${API}/validateToken`, JSON.parse(user));
-	else return false;
+	else {
+		logout();
+		return false;
+	}
 }
 
 function userInfo() {

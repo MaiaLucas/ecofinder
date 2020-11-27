@@ -1,18 +1,23 @@
-aside.app-new-content {
-	position: fixed;
+.app-new-content {
+	position: absolute;
+	right: 0px;
 	height: 100%;
 	padding: 32px 44px;
+	background-color: #44c96a;
 	background-color: #44c96a00;
 
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
 	align-items: center;
+	color: #f9f9f9;
+	font-size: 12px;
 }
 
 .btn-new-content {
 	width: 58px;
 	height: 58px;
+	z-index: 9999;
 
 	border: 0;
 
@@ -27,10 +32,24 @@ aside.app-new-content {
 	justify-content: center;
 	align-items: center;
 	position: absolute;
-	right: 100px;
-	bottom: 100px;
+	/* right: 50%; */
+	/* bottom: 100px;
+	left: 50px; */
 }
 
 .btn-new-content:hover {
 	background: linear-gradient(116.8deg, #37c77f -41.65%, #00ff3a 99.75%);
+}
+
+@media (max-width: 800px) {
+	/* .app-new-content {
+		right: 0px;
+	} */
+	#btn-title {
+		display: none;
+	}
+	.btn-new-content {
+		/* bottom: 20px;
+		right: -100px; */
+	}
 }

@@ -1,5 +1,6 @@
 #place-detail {
 	display: flex;
+	flex-direction: column;
 	background-color: #edfff6;
 }
 
@@ -9,11 +10,11 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	margin-top: 55px;
 }
 
 .place-details {
-	/* width: 700px; */
-	width: 80vw !important;
+	width: 90vw !important;
 
 	background: #ffffff;
 	border: 1px solid #d3e2e5;
@@ -22,7 +23,10 @@
 	overflow: hidden;
 
 	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
 	justify-content: center;
+	align-items: center;
 }
 
 .place-details > img {
@@ -33,7 +37,7 @@
 
 .place-details .images {
 	display: grid;
-	grid-template-columns: repeat(6, 1fr);
+	grid-template-columns: repeat(5, 1fr);
 	column-gap: 16px;
 
 	margin: 16px 40px 0;
@@ -45,7 +49,7 @@
 	background: none;
 	cursor: pointer;
 	border-radius: 20px;
-	overflow: hidden;
+
 	outline: none;
 
 	opacity: 0.6;
@@ -62,7 +66,8 @@
 }
 
 .place-details .place-details-content {
-	padding: 80px;
+	padding: 40px;
+	width: 100%;
 }
 
 .place-details .place-details-content h1 {
@@ -179,4 +184,67 @@
 
 .place-details .place-details-content button.contact-button:hover {
 	background: #36cf82;
+}
+
+@media (max-width: 800px) {
+	#place-detail main .place-details {
+		/* background-color: #0089a5; */
+		width: 100vw !important;
+		padding: 0 !important;
+		margin: 0px !important;
+	}
+
+	#place-detail main .place-details > img {
+		height: 50vh;
+		width: 100%;
+	}
+	.place-details .images {
+		grid-template-columns: repeat(5, 1fr);
+		column-gap: 8px;
+
+		margin: 8px 20px 0;
+	}
+
+	#place-detail main .place-details .images button {
+		width: 100%;
+	}
+
+	.place-details .place-details-content {
+		width: 100%;
+		padding: 12px;
+	}
+	.place-details .place-details-content h1 {
+		font-size: 30px;
+		line-height: 30px;
+	}
+	.place-details .place-details-content h2 {
+		font-size: 24px;
+		line-height: 24px;
+	}
+	.place-details .place-details-content p {
+		margin-top: 12px;
+	}
+	.place-details .place-details-content hr {
+		margin: 24px 0;
+	}
+
+	.place-details .place-details-content .open-details {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+
+	.place-details .place-details-content .open-details div {
+		padding: 16px 12px;
+		border-radius: 10px;
+		font-size: 12px;
+		line-height: 18px;
+		width: 40%;
+		height: 150px;
+	}
+
+	.place-details .place-details-content .open-details div.hour h4,
+	.place-details .place-details-content .open-details div.open-on-weekends h4 {
+		font-size: 24px;
+	}
 }

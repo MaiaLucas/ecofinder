@@ -118,13 +118,9 @@ export default () => {
 			<div id="place-detail">
 				<Sidebar />
 				<main>
-					<Grid container className="place-details">
-						<img
-							className={classes.img}
-							src={arrImages[activeStep].imgPath || amongNature}
-							alt=""
-						/>
-						<Grid item xs={6} className="images">
+					<div className="place-details">
+						<img src={arrImages[activeStep].imgPath || amongNature} alt="" />
+						<div className="images">
 							{arrImages.map((image, index) => {
 								return (
 									<button
@@ -139,8 +135,9 @@ export default () => {
 									</button>
 								);
 							})}
-						</Grid>
-						<Grid item xs={10} className="place-details-content">
+						</div>
+
+						<div className="place-details-content">
 							<h1>
 								{objPlace.title}
 								{objPlace.author === user ? (
@@ -175,8 +172,8 @@ export default () => {
 									<Typography variant={"h4"}>{objPlace.phone}</Typography>
 								</div>
 							</div>
-						</Grid>
-					</Grid>
+						</div>
+					</div>
 				</main>
 			</div>
 		);

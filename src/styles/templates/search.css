@@ -1,7 +1,8 @@
 .app-search {
 	display: flex;
-	width: "100%";
+	/* width: 50%; */
 	border-radius: "50px";
+	/* background-color: #37c77f; */
 }
 
 .app-search input[type="text"] {
@@ -41,4 +42,11 @@
 		#37c77f -41.65%,
 		#00ff3a 99.75%
 	) !important;
+}
+
+@media (max-width: 800px) {
+	.app-search {
+		/* background-color: #00ff19; */
+		/* width: 90vw; */
+	}
 }

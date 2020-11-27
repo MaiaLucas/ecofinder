@@ -1,19 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
 
 import Card from "./Card";
+import "../styles/templates/group-place.css";
+import Loading from "./Loading";
 
 const useStyles = makeStyles((theme) => ({
-	root: {
-		maxWidth: "100vw",
-		overflowX: "hidden",
-	},
-	typeTitle: {
-		margin: theme.spacing(2),
-		fontFamily: "Poppins",
-	},
 	places: {
 		width: "100%",
 		display: "flex",
@@ -27,9 +21,6 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: "center",
 		justifyContent: "start",
 		minHeight: "25ch",
-	},
-	placesWithTitle: {
-		flexWrap: "nowrap",
 	},
 	place: {
 		margin: "24px",
@@ -48,17 +39,15 @@ const useStyles = makeStyles((theme) => ({
 			width: "100%",
 		},
 	},
-	pagination: {
-		paddingLeft: "24px",
-		margin: 0,
-	},
 }));
 
 export default (props) => {
 	const classes = useStyles();
-	const perPage = props.perPage ? props.perPage : 5;
-	const pages = Math.ceil(props.arrPlaces.length / perPage);
+	const [perPage, setPerPage] = useState(5);
 	const [currentPage, setCurrentPage] = useState(1);
+	const [pages, setPages] = useState(
+		Math.ceil(props.arrPlaces.length / perPage)
+	);
 	const [slicedData, setSlicedData] = useState(
 		[...props.arrPlaces].slice(
 			(currentPage - 1) * perPage,
@@ -66,6 +55,7 @@ export default (props) => {
 		)
 	);
 
+	const [isLoaded, setIsLoaded] = useState(false);
 	const changePage = (page, e) => {
 		e.preventDefault();
 		if (page !== currentPage) {
@@ -76,36 +66,47 @@ export default (props) => {
 		}
 	};
 
-	return (
-		<Grid container className={classes.root}>
-			<Grid item xs={4}>
-				<Typography
-					variant={"h4"}
-					className={clsx(classes.typeTitle, classes.spacing)}
-				>
-					{props.title}
-				</Typography>
+	useEffect(() => {
+		if (window.innerWidth < 800) {
+			setPerPage(1);
+			setPages(Math.ceil(props.arrPlaces.length / 1));
+
+			setSlicedData(
+				[...props.arrPlaces].slice((currentPage - 1) * 1, currentPage * 1)
+			);
+		}
+
+		setIsLoaded(true);
+		return () => {};
+	}, []);
+
+	if (isLoaded) {
+		return (
+			<div id="page-group-list">
+				<Typography variant={"h4"}>{props.title}</Typography>
 				{pages > 1 ? (
 					<Pagination
 						count={pages}
 						size="small"
 						page={currentPage}
 						onChange={(e, page) => changePage(page, e)}
-						className={classes.pagination}
+						className="pagination"
 					/>
 				) : (
 					""
 				)}
-			</Grid>
-			<Grid container className={pages > 1 ? classes.places : classes.places2}>
-				{slicedData.map((place) => {
-					return (
-						<Grid item xs={2} key={place.id} className={classes.place}>
-							<Card config={place} />
-						</Grid>
-					);
-				})}
-			</Grid>
-		</Grid>
-	);
+				<div className={pages > 1 ? "place-start" : "place-center"}>
+					{slicedData.map((place) => {
+						return (
+							<div key={place.id} className="place">
+								<Card config={place} />
+							</div>
+						);
+					})}
+				</div>
+			</div>
+		);
+	} else {
+		return <Loading />;
+	}
 };

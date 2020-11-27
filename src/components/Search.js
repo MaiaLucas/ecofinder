@@ -16,46 +16,6 @@ import Axios from "axios";
 import "../styles/templates/search.css";
 
 const useStyles = makeStyles((theme) => ({
-	// margin: {
-	// 	margin: theme.spacing(2),
-	// },
-	// search: {
-	// 	display: "flex",
-	// 	width: "100%",
-	// 	borderRadius: "50px",
-	// 	position: "relative",
-	// },
-	// searchTerm: {
-	// 	width: "110%",
-	// 	borderRight: "none",
-	// 	padding: "5px",
-	// 	height: "60px",
-	// 	fontSize: "20px",
-	// 	borderRadius: "20px",
-	// 	outline: "none !important",
-	// 	background: "#f9f9f9",
-	// 	boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.5)",
-	// 	border: "none",
-	// 	"&:focus": {
-	// 		color: "#222",
-	// 		padding: "15px",
-	// 	},
-	// },
-	// searchButton: {
-	// 	width: "60px",
-	// 	height: "60px",
-	// 	textAlign: "center",
-	// 	borderRadius: "20px",
-	// 	cursor: "pointer",
-	// 	boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.5)",
-	// 	marginLeft: "16px",
-	// 	background: "linear-gradient(116.8deg, #37C77F -41.65%, #00FF3A 99.75%);",
-	// 	color: "#f9f9f9",
-	// 	"&:hover": {
-	// 		color: "#222",
-	// 		background: "#79FD86",
-	// 	},
-	// },
 	searchOption: {
 		width: "100%",
 	},
@@ -114,6 +74,9 @@ export default (props) => {
 					setVisible(false);
 					setOptions([]);
 				});
+		} else {
+			setVisible(false);
+			setOptions([]);
 		}
 	}
 

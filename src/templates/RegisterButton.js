@@ -8,6 +8,9 @@ export default (params) => {
 	const { push } = useHistory();
 	return (
 		<div className="app-new-content">
+			<label to="btn-new-content" id="btn-title">
+				cadastrar local
+			</label>
 			<IconButton
 				className={"btn-new-content"}
 				color="inherit"

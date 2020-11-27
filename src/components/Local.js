@@ -11,35 +11,6 @@ import Sidebar from "../templates/SideBar";
 import "../styles/pages/local-list.css";
 
 const useStyles = makeStyles((theme) => ({
-	// root: {
-	// 	flexGrow: 1,
-	// },
-	spacing: {
-		marginTop: "20ch",
-	},
-	paper: {
-		padding: theme.spacing(2),
-		margin: theme.spacing(2),
-		textAlign: "center",
-		color: theme.palette.text.secondary,
-		// height: "100ch",
-	},
-	header: {
-		alignItems: "center",
-		height: "15%",
-		paddingLeft: theme.spacing(4),
-		backgroundColor: theme.palette.background.default,
-	},
-	highlights: {
-		display: "flex",
-		flexDirection: "column",
-		alignItems: "center",
-		justifyContent: "center",
-		backgroundImage: `url(${amongNature})`,
-		backgroundRepeat: "no-repeat",
-		backgroundSize: "100vw 100vh",
-		background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-	},
 	places: {
 		display: "flex",
 		alignItems: "center",
@@ -68,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 		textAlign: "center",
 		color: theme.palette.text.secondary,
 		// height: "45ch",
-		background: "#292",
+		// background: "#292",
 		"& img": {
 			height: "85%",
 			display: "block",
@@ -152,49 +123,39 @@ export default (props) => {
 			<div id="page-local-list">
 				<Sidebar />
 				<main>
-					<Grid container className="local-list">
-						<Grid item xs={12}>
-							<Paper className={clsx("local-highlights", classes.highlights)}>
-								<Typography variant={"h1"}>
-									{pageInfo[type].headline}
-								</Typography>
-								<Typography variant={"h4"}>
-									{pageInfo[type].subheadline}
-								</Typography>
-							</Paper>
-						</Grid>
-					</Grid>
-					<Grid container className={clsx(classes.places, "local-list")}>
-						<Grid item xs={12}>
-							<Paper className={classes.placesGroup}>
-								{local && !type ? (
-									<>
-										{garbageCollect.length ? (
-											<GroupPlace title={TYPES[0]} arrPlaces={garbageCollect} />
-										) : (
-											""
-										)}
-										{experience.length ? (
-											<GroupPlace title={TYPES[1]} arrPlaces={experience} />
-										) : (
-											""
-										)}
-										{store.length ? (
-											<GroupPlace title={TYPES[2]} arrPlaces={store} />
-										) : (
-											""
-										)}
-									</>
-								) : (
-									<GroupPlace
-										title=""
-										arrPlaces={items}
-										perPage={items.length}
-									/>
-								)}
-							</Paper>
-						</Grid>
-					</Grid>
+					<div className="local-list">
+						<div className="local-highlights">
+							<Typography variant={"h1"}>{pageInfo[type].headline}</Typography>
+							<Typography variant={"h4"}>
+								{pageInfo[type].subheadline}
+							</Typography>
+						</div>
+					</div>
+					<div className="local-list">
+						<div className="list">
+							{local && !type ? (
+								<>
+									{garbageCollect.length ? (
+										<GroupPlace title={TYPES[0]} arrPlaces={garbageCollect} />
+									) : (
+										""
+									)}
+									{experience.length ? (
+										<GroupPlace title={TYPES[1]} arrPlaces={experience} />
+									) : (
+										""
+									)}
+									{store.length ? (
+										<GroupPlace title={TYPES[2]} arrPlaces={store} />
+									) : (
+										""
+									)}
+								</>
+							) : (
+								<GroupPlace title="" arrPlaces={items} perPage={items.length} />
+							)}
+						</div>
+					</div>
 				</main>
 			</div>
 		);

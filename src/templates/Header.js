@@ -23,22 +23,15 @@ const useStyles = makeStyles((theme) => ({
 		color: "#f9f9f9",
 		boxShadow: "0px 5px 5px 0px rgba(0, 0, 0, 0.01)",
 	},
-	menuButton: {
-		marginLeft: theme.spacing(2),
-	},
 	title: {
 		flexGrow: 1,
-		color: "#222",
+		color: "#37C77F",
 		"& img": {
 			width: "120px",
 			// fontSize: "20px",
 		},
 	},
 	paper: {
-		marginRight: theme.spacing(2),
-	},
-	user: {
-		fontSize: "18px",
 		marginRight: theme.spacing(2),
 	},
 }));
@@ -102,7 +95,7 @@ export default (props) => {
 	}, [open]);
 
 	return (
-		<AppBar position="fixed" className={classes.appbar}>
+		<AppBar position="absolute" className={classes.appbar}>
 			<Toolbar>
 				<Typography variant="h6" className={classes.title}>
 					<img src={logo} alt="logo" onClick={() => push("/")} />
@@ -116,7 +109,7 @@ export default (props) => {
 						<IconButton
 							edge="start"
 							component="span"
-							className={classes.menuButton}
+							className="menu-button"
 							color="inherit"
 							aria-label="menu"
 							ref={anchorRef}
@@ -125,7 +118,7 @@ export default (props) => {
 							aria-haspopup="true"
 							onClick={handleToggle}
 						>
-							<div className={classes.user}>Olá, {user}</div>
+							<div className="username">Olá, {user}</div>
 							<MenuIcon size="medium" />
 						</IconButton>
 						<Popper

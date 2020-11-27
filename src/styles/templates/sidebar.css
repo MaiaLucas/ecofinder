@@ -37,3 +37,9 @@ aside.app-sidebar footer a:hover,
 aside.app-sidebar footer button:hover {
 	background: linear-gradient(116.8deg, #37c77f -41.65%, #00ff3a 99.75%);
 }
+
+@media (max-width: 800px) {
+	aside.app-sidebar {
+		display: none;
+	}
+}
