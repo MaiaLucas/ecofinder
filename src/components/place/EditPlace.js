@@ -59,6 +59,7 @@ export default () => {
 				setHrFinal(place.hr_final);
 				setOpenOnWeekends(place.opening_days !== "De Seg a Sex");
 				setPreviewImages(place.images_url ? place.images_url.split(",") : []);
+				setImages(place.images_url ? place.images_url.split(",") : []);
 			});
 		})();
 		return () => {};
