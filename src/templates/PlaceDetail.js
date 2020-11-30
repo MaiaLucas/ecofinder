@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Link, Redirect, useParams } from "react-router-dom";
+import { Link, Redirect, useHistory, useParams } from "react-router-dom";
 import amongNature from "../assets/img/places_highlights.jpg";
 import API from "../API";
 import Loading from "./Loading";
-import { Grid, makeStyles, Typography } from "@material-ui/core";
-import { FiClock, FiEdit, FiPhoneCall } from "react-icons/fi";
+import { Grid, IconButton, makeStyles, Typography } from "@material-ui/core";
+import { FiClock, FiEdit, FiPhoneCall, FiTrash } from "react-icons/fi";
 import clsx from "clsx";
 import AuthService from "../services/auth.service";
 import Sidebar from "./SideBar";
 import "../styles/pages/place-detail.css";
+import Axios from "axios";
 
 const tutorialSteps = [
 	{
@@ -73,6 +74,8 @@ export default () => {
 	const classes = useStyles();
 	const { id } = useParams();
 
+	const { goBack } = useHistory();
+
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [arrImages, setArrImages] = useState(tutorialSteps);
 	const [objPlace, setObjPlace] = useState({});
@@ -83,8 +86,11 @@ export default () => {
 		(async () => {
 			await AuthService.getCurrentUser().then((req, res) => {
 				if (req.data) {
-					const { id } = AuthService.userInfo();
-					setUser(id);
+					const { id, token } = AuthService.userInfo();
+					setUser({
+						token,
+						id,
+					});
 				}
 			});
 			fetch(`${API}/place/${id}`)
@@ -113,6 +119,23 @@ export default () => {
 		return () => {};
 	}, []);
 
+	function removePlace(e) {
+		if (window.confirm("Deseja realmente excluir esse local?")) {
+			console.log(`${API}/place/${id}`);
+			Axios.delete(`${API}/place/${id}`, {
+				headers: {
+					Authorization: `Bearer ${user.token}`,
+				},
+			})
+				.then((req) => {
+					goBack();
+				})
+				.catch((err) => {
+					alert("Não foi possível excluir o local desejado");
+				});
+		}
+	}
+
 	if (isLoaded) {
 		return (
 			<div id="place-detail">
@@ -140,10 +163,20 @@ export default () => {
 						<div className="place-details-content">
 							<h1>
 								{objPlace.title}
-								{objPlace.author === user ? (
+								{objPlace.author === user.id ? (
 									<Link className={classes.edit} to={"/place/" + id}>
 										<FiEdit size={32} color="#15B6D6" />
 									</Link>
+								) : (
+									""
+								)}
+								{objPlace.author === user.id ? (
+									<IconButton
+										className={classes.edit}
+										onClick={(e) => removePlace(e)}
+									>
+										<FiTrash size={32} color="red" />
+									</IconButton>
 								) : (
 									""
 								)}
