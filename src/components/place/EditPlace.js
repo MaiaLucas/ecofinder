@@ -145,7 +145,7 @@ export default () => {
 		<div id="page-create-place">
 			<Sidebar />
 			<main>
-				<h1>Cadastro de Local</h1>
+				<h1>Edição do Local</h1>
 				<div className={`message ${alertVisible}`}>
 					<Alert
 						variant="filled"
